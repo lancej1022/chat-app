@@ -182,6 +182,9 @@ importers:
 
   apps/expo:
     dependencies:
+      '@chat-app/base-component-lib':
+        specifier: workspace:^
+        version: link:../../packages/base-component-lib
       '@expo/metro-config':
         specifier: ^0.19.12
         version: 0.19.12

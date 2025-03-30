@@ -17,6 +17,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@chat-app/base-component-lib": "workspace:*",
     "@expo/metro-config": "^0.19.12",
     "@shopify/flash-list": "1.7.6",
     "@tanstack/react-query": "catalog:",
@@ -41,7 +42,7 @@
     "react-native-reanimated": "catalog:",
     "react-native-safe-area-context": "~5.2.0-beta.0",
     "react-native-screens": "~4.9.1",
-    "react-native-web": "^0.19.13",
+    "react-native-web": "catalog:",
     "superjson": "2.2.2"
   },
   "devDependencies": {

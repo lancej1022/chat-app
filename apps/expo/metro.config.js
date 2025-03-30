@@ -12,9 +12,17 @@ const config = withTurborepoManagedCache(
   }),
 );
 
-// XXX: Resolve our exports in workspace packages
+// Resolve our `exports` in workspace package.jsons
 // https://github.com/expo/expo/issues/26926
 config.resolver.unstable_enablePackageExports = true;
+
+// Magic fix for `SyntaxError: 269919:10:'import.meta' is currently unsupported, js engine: hermes`
+// https://github.com/pmndrs/zustand/discussions/1967#discussioncomment-9578159
+config.resolver.unstable_conditionNames = [
+  "browser",
+  "require",
+  "react-native",
+];
 
 module.exports = config;
 

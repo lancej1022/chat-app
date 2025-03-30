@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Button, Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, Stack } from "expo-router";
+import { Button, Checkbox, Text } from "@chat-app/base-component-lib";
 import { FlashList } from "@shopify/flash-list";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -115,8 +116,16 @@ function MobileAuth() {
         // onPress={() => (user ? signOut() : signIn())}
         onPress={() => console.log("pressed")}
         // title={user ? "Sign Out" : "Sign In With Discord"}
-        title={"Sign In With Discord"}
-        color={"#5B65E9"}
+        // title={"ayyyy lmao"}
+        // color={"#5B65E9"}
+      >
+        <Text>ayyyy lmao</Text>
+      </Button>
+      <Checkbox
+        checked={true}
+        onCheckedChange={() => {
+          return;
+        }}
       />
     </>
   );
