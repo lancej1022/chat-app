@@ -2,11 +2,13 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useColorScheme } from "nativewind";
 
-import { queryClient } from "~/utils/api";
+// import { queryClient } from "~/utils/api";
 
 import "../styles.css";
 
-import { QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 // This is the main layout of the app
 // It wraps your pages with the providers they need

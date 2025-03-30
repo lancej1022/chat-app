@@ -4,6 +4,8 @@
   "private": true,
   "main": "index.ts",
   "scripts": {
+    "//comment": "`android:dev-build` seems to be the command you want to run for local development builds and running via android emulator",
+    "android:dev-build": "expo run:android",
     "clean": "git clean -xdf .cache .expo .turbo android ios node_modules",
     "dev": "expo start",
     "dev:android": "expo start --android",
@@ -39,10 +41,10 @@
     "react-native-reanimated": "~3.17.1",
     "react-native-safe-area-context": "~5.2.0-beta.0",
     "react-native-screens": "~4.9.1",
+    "react-native-web": "^0.19.13",
     "superjson": "2.2.2"
   },
   "devDependencies": {
-    "@acme/api": "workspace:*",
     "@acme/eslint-config": "workspace:*",
     "@acme/prettier-config": "workspace:*",
     "@acme/tailwind-config": "workspace:*",
