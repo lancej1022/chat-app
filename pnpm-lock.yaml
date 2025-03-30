@@ -21,6 +21,9 @@ catalogs:
     eslint:
       specifier: ^9.23.0
       version: 9.23.0
+    postcss:
+      specifier: ^8.5.3
+      version: 8.5.3
     prettier:
       specifier: ^3.5.3
       version: 3.5.3
@@ -283,7 +286,7 @@ importers:
   tooling/tailwind:
     dependencies:
       postcss:
-        specifier: ^8.5.3
+        specifier: 'catalog:'
         version: 8.5.3
       tailwindcss:
         specifier: 'catalog:'
