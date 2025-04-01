@@ -112,16 +112,11 @@ function MobileAuth() {
         {/* {user?.name ?? "Not logged in"} */}
         Not logged in
       </Text>
-      <Button
-        // onPress={() => (user ? signOut() : signIn())}
-        onPress={() => console.log("pressed")}
-        // title={user ? "Sign Out" : "Sign In With Discord"}
-        // title={"ayyyy lmao"}
-        // color={"#5B65E9"}
-      >
+      <Button onPress={() => console.log("pressed")}>
         <Text>ayyyy lmao</Text>
       </Button>
       <Checkbox
+        className="max-h-4"
         checked={true}
         onCheckedChange={() => {
           return;
