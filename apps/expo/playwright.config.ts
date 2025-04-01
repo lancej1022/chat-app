@@ -82,7 +82,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: "pnpm dev", // TODO: create a production build and serve it instead
+    command: "pnpm serve:web",
     url: " http://localhost:8081",
     reuseExistingServer: !process.env.CI,
   },
