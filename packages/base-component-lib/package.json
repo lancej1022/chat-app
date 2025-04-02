@@ -23,7 +23,7 @@
   "scripts": {
     "build": "vite build",
     "build-storybook": "storybook build",
-    "clean": "bun run rm -rf dist storybook-static *.tsbuildinfo",
+    "clean": "git clean -xdf .cache .expo .turbo android ios node_modules",
     "dev": "vite build -w",
     "lint": "eslint .  --max-warnings 0",
     "storybook": "storybook dev -p 6006 --no-open",
