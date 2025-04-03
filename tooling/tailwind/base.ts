@@ -5,6 +5,7 @@ import { hairlineWidth } from "nativewind/theme";
 // import nativewindPreset from 'nativewind/preset'
 
 export default {
+  // TODO: should this be `"class"` instead of `["class"]`?
   darkMode: ["class"],
   content: ["src/**/*.{ts,tsx}"],
   // presets: [require('nativewind/preset')],

@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import { Pressable, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, Stack } from "expo-router";
-import { Button, Checkbox, Text } from "@chat-app/base-component-lib";
 import { FlashList } from "@shopify/flash-list";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
+// import { Button, Checkbox, Text } from "@chat-app/base-component-lib";
+import { Button } from "~/components/ui/button";
+import { Checkbox } from "~/components/ui/checkbox";
+import { Text } from "~/components/ui/text";
 
 // import type { RouterOutputs } from "~/utils/api";
 // import { trpc } from "~/utils/api";
@@ -80,18 +84,18 @@ function CreatePost() {
           {error.data.zodError.fieldErrors.content}
         </Text>
       )} */}
-      <Pressable
+      <Button
         className="flex items-center rounded bg-primary p-2"
         onPress={() => {
-          console.log("pressed");
+          console.log("button pressed");
           // mutate({
           //   title,
           //   content,
           // });
         }}
       >
-        <Text className="text-foreground">Create</Text>
-      </Pressable>
+        <Text>Create</Text>
+      </Button>
       {/* {error?.data?.code === "UNAUTHORIZED" && (
         <Text className="mt-2 text-destructive">
           You need to be logged in to create a post
@@ -108,15 +112,18 @@ function MobileAuth() {
 
   return (
     <>
-      <Text className="pb-2 text-center text-xl font-semibold text-white">
+      <Text className="pb-2 text-center text-xl font-semibold">
         {/* {user?.name ?? "Not logged in"} */}
         Not logged in
       </Text>
-      <Button onPress={() => console.log("pressed")}>
+      <Button onPress={() => console.log("button pressed")}>
         <Text>ayyyy lmao</Text>
       </Button>
       <Checkbox
-        className="max-h-4"
+        // className="max-h-4"
+        onPress={() => {
+          console.log("checkbox pressed");
+        }}
         checked={true}
         onCheckedChange={() => {
           return;
@@ -144,7 +151,7 @@ export default function Index() {
       <Stack.Screen options={{ title: "Home Page" }} />
       <View className="h-full w-full bg-background p-4">
         <Text className="pb-2 text-center text-5xl font-bold text-foreground">
-          Create <Text className="text-primary">T3</Text> Turbo
+          Create <Text>T3</Text> Turbo
         </Text>
 
         <MobileAuth />
