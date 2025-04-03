@@ -10,11 +10,6 @@
       "types": "./dist/index.d.ts",
       "require": "./dist/index.cjs",
       "default": "./dist/index.js"
-    },
-    "./cn": {
-      "types": "./dist/utils/cn.d.ts",
-      "require": "./dist/utils/cn.cjs",
-      "default": "./dist/utils/cn.js"
     }
   },
   "files": [

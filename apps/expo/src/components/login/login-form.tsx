@@ -1,12 +1,13 @@
 import { View } from "react-native";
 import Svg, { Path } from "react-native-svg";
+import { Button, Text } from "@chat-app/base-component-lib";
 
-import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { Text } from "~/components/ui/text";
+// import { Text } from "~/components/ui/text";
 import { P } from "~/components/ui/typography";
 import { cn } from "~/lib/utils";
+import { Checkbox } from "../ui/checkbox";
 
 function HorizontalBar() {
   return <View className="h-[1px] flex-1 bg-border" />;
@@ -47,6 +48,7 @@ export function LoginForm({
         <P className="text-balance text-sm text-muted-foreground">
           Enter your email below to login to your account
         </P>
+        <Checkbox checked={true} onCheckedChange={() => {}} />
       </View>
       <View className="grid gap-6">
         <View className="grid gap-2">

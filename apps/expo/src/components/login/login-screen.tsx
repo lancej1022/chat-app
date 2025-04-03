@@ -31,14 +31,13 @@ export function LoginScreen() {
           </View>
         </View>
       </View>
-      <View className="relative hidden bg-muted lg:block">
-        {/* TODO: add placeholder image */}
+      {/* <View className="relative hidden bg-muted lg:block">
         <Image
-          // source={require('@chat-app/assets/placeholder.svg')}
+          // source={require('@chat-app/assets/placeholder.svg')} TODO: add placeholder image
           alt="Image"
           className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
         />
-      </View>
+      </View> */}
     </View>
   );
 }
