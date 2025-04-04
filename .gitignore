@@ -52,3 +52,7 @@ dist/
 
 # turbo
 .turbo
+
+#tanstack
+dist-ssr
+*.local
