@@ -4,7 +4,6 @@
 // import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import { resolve } from "node:path";
 // TODO: does this work with Tailwind@3.x ?
-import tailwindcss from "@tailwindcss/vite";
 // import path from "path";
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import viteReact from "@vitejs/plugin-react";
@@ -31,7 +30,6 @@ export default defineConfig({
       },
     },
     viteReact(),
-    tailwindcss(),
     reactNativeWeb(),
   ],
   test: {
