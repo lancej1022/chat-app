@@ -42,12 +42,17 @@
     "@tanstack/router-plugin": "^1.114.3",
     "class-variance-authority": "catalog:",
     "clsx": "catalog:",
+    "lucide-react-native": "catalog:",
     "nativewind": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-native": "catalog:",
+    "react-native-reanimated": "catalog:",
+    "react-native-svg": "catalog:",
     "react-native-web": "catalog:",
-    "tailwindcss": "catalog:"
+    "tailwind-merge": "catalog:",
+    "tailwindcss": "catalog:",
+    "tailwindcss-animate": "catalog:"
   },
   "devDependencies": {
     "@acme/tailwind-config": "workspace:*",

@@ -1,0 +1,12 @@
+diff --git a/dist/doctor.js b/dist/doctor.js
+index 98379be8dd4bc3cf639c743629b100ec463c6859..c41517ae6d93273d1da744cb295f56bfe7199229 100644
+--- a/dist/doctor.js
++++ b/dist/doctor.js
+@@ -1,4 +1,7 @@
+ "use strict";
++if (typeof exports === "undefined") {
++  var exports = {};
++}
+ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.verifyJSX = verifyJSX;
+ exports.verifyFlag = verifyFlag;
