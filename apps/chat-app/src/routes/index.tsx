@@ -1,4 +1,5 @@
 // import { Text, View } from "react-native";
+import { useState } from "react";
 import { Button, Checkbox, Text } from "@chat-app/base-component-lib";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
@@ -15,13 +16,14 @@ export const Route = createFileRoute("/")({
 
 function App() {
   // debugger;
+  const [checked, setChecked] = useState(false);
   return (
     <>
-      {/* <Button>
+      <Button>
         <Text>Yeet</Text>
       </Button>
-      <Checkbox checked={true} onCheckedChange={() => {}} /> */}
-      <LoginScreen />
+      <Checkbox checked={checked} onCheckedChange={setChecked} />
+      {/* <LoginScreen /> */}
     </>
     // <ThemeToggle />
     //   </nav>
