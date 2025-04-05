@@ -2,6 +2,8 @@
 import { Button, Checkbox, Text } from "@chat-app/base-component-lib";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
+import { LoginScreen } from "~/components/login/login-screen";
+
 // import { ThemeToggle } from "~/components/ThemeToggle";
 
 // import { Button, Checkbox, Text } from '@chat-app/base-component-lib';
@@ -12,13 +14,14 @@ export const Route = createFileRoute("/")({
 });
 
 function App() {
+  // debugger;
   return (
     <>
-      <Button>
+      {/* <Button>
         <Text>Yeet</Text>
       </Button>
-      <Checkbox checked={true} onCheckedChange={() => {}} />
-      {/*<LoginScreen /> */}
+      <Checkbox checked={true} onCheckedChange={() => {}} /> */}
+      <LoginScreen />
     </>
     // <ThemeToggle />
     //   </nav>
