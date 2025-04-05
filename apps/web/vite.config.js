@@ -39,11 +39,6 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
   },
-  resolve: {
-    alias: {
-      "@": resolve(__dirname, "./src"),
-    },
-  },
   optimizeDeps: {
     force: true,
     esbuildOptions: {

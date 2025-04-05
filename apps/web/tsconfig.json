@@ -23,7 +23,6 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
       "react-native": ["node_modules/react-native-web"]
     }
   }

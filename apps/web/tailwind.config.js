@@ -4,6 +4,7 @@ const { hairlineWidth } = require("nativewind/theme");
 module.exports = {
   darkMode: "class",
   content: [
+    // TODO: how to debug which files are actually being processed?
     "./src/**/*.{ts,tsx}",
     "../../packages/base-component-lib/dist/**/*.{js,cjs}",
     // "../../packages/base-component-lib/src/**/*.{ts,tsx}",

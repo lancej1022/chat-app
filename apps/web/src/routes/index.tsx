@@ -1,6 +1,12 @@
-import { Button, Text } from "@chat-app/base-component-lib";
+import { useState } from "react";
+import {
+  Button,
+  // Checkbox,
+  Text,
+} from "@chat-app/base-component-lib";
 import { createFileRoute } from "@tanstack/react-router";
 
+import { Checkbox } from "../components/checkbox";
 import logo from "../logo.svg";
 
 export const Route = createFileRoute("/")({
@@ -8,6 +14,7 @@ export const Route = createFileRoute("/")({
 });
 
 function App() {
+  const [checked, setChecked] = useState(false);
   return (
     <div className="text-center">
       <header className="flex min-h-screen flex-col items-center justify-center bg-[#282c34] text-[calc(10px+2vmin)] text-white">
@@ -16,9 +23,13 @@ function App() {
           className="pointer-events-none h-[40vmin] animate-[spin_20s_linear_infinite]"
           alt="logo"
         />
-        <Button>
+        <Button className="yeet">
           <Text>Click me</Text>
         </Button>
+        <Checkbox
+          checked={checked}
+          onCheckedChange={() => setChecked((prev) => !prev)}
+        />
         <p>
           Edit <code>src/routes/index.tsx</code> and save to reload.
         </p>

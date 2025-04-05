@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["DOM", "ESNext"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "nativewind",
+    "moduleResolution": "bundler",
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "react-native": ["node_modules/react-native-web"],
+      "~/*": ["src/*"]
+    },
+    "types": ["nativewind/types"],
+    "outDir": "dist",
+    "strict": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src", "**/*.ts", "**/*.tsx", "nativewind-env.d.ts"],
+  "exclude": ["node_modules", "dist"]
+}
