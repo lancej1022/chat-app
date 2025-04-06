@@ -51,6 +51,7 @@ const Trigger = forwardRef<PressableRef, SlottablePressableProps>(
     const { disabled, checked, onCheckedChange, nativeID } =
       useCheckboxContext();
 
+    // TODO: add proper keyboard handling!
     function onPress(ev: GestureResponderEvent) {
       if (disabled) return;
       const newValue = !checked;

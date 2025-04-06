@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import {
   Button,
+  Checkbox,
   // Checkbox,
   Input,
   Label,
@@ -41,6 +43,7 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"form">) {
+  const [checked, setChecked] = useState(false);
   return (
     <View
       // @ts-expect-error -- TODO: idk why this is throwing an error, but it works fine on web
@@ -52,6 +55,12 @@ export function LoginForm({
         <Text role="heading" aria-level="1" className="text-2xl font-bold">
           Login to your account
         </Text>
+        <Checkbox checked={checked} onCheckedChange={setChecked} />
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={() => setChecked(!checked)}
+        />
         <P className="text-balance text-sm text-muted-foreground">
           Enter your email below to login to your account
         </P>
