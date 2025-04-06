@@ -19,11 +19,11 @@ function App() {
   const [checked, setChecked] = useState(false);
   return (
     <>
-      <Button>
+      {/* <Button>
         <Text>Yeet</Text>
       </Button>
-      <Checkbox checked={checked} onCheckedChange={setChecked} />
-      {/* <LoginScreen /> */}
+      <Checkbox checked={checked} onCheckedChange={setChecked} /> */}
+      <LoginScreen />
     </>
     // <ThemeToggle />
     //   </nav>

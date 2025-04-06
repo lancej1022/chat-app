@@ -65,9 +65,8 @@ export function LoginForm({
         <View className="grid gap-2">
           <View className="flex flex-row items-center">
             <Label htmlFor="password">Password</Label>
-            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-            {/* @ts-ignore -- the `href` definitely works as expected when used in react-native-web, so im not sure why it errors here? */}
             <Text
+              // @ts-expect-error -- the `href` definitely works as expected when used in react-native-web, so im not sure why it errors here?
               href="#yeet"
               className="ml-auto text-sm underline-offset-4 hover:underline"
             >
