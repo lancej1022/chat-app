@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import Svg, { Path } from "react-native-svg";
-import { Button, Checkbox, Text } from "@chat-app/base-component-lib";
+import { Button, Text } from "@chat-app/base-component-lib";
 
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
@@ -43,13 +43,12 @@ export function LoginForm({
       {...props}
     >
       <View className="flex flex-col items-center gap-2 text-center">
-        <Text role="heading" aria-level="1" className="text-2xl font-bold">
+        <Text role="heading" aria-level={1} className="text-2xl font-bold">
           Login to your account
         </Text>
         <P className="text-balance text-sm text-muted-foreground">
           Enter your email below to login to your account
         </P>
-        <Checkbox checked={true} onCheckedChange={() => {}} />
       </View>
       <View className="grid gap-6">
         <View className="grid gap-2">
@@ -81,13 +80,14 @@ export function LoginForm({
           <HorizontalBar />
         </View>
         <Button variant="outline" className="flex w-full flex-row">
-          <GitHubIcon className="mr-2" />
-          <Text>Login with GitHub</Text>
+          <GitHubIcon />
+          <Text className="ml-2">Login with GitHub</Text>
         </Button>
       </View>
       <View
         data-testid="login-form-footer"
-        className="block text-center text-sm"
+        // className="block text-center text-sm"
+        className="flex flex-row items-center justify-center text-center text-sm"
       >
         <Text>Don&apos;t have an account? </Text>
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
