@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@chat-app/base-component-lib": "workspace:*",
+    "@chat-app/features": "workspace:*",
     "@expo/metro-config": "^0.19.12",
     "@shopify/flash-list": "1.7.6",
     "@tanstack/react-query": "catalog:",

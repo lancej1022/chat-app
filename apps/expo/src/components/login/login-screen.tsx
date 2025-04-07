@@ -1,7 +1,8 @@
 import { Image, View } from "react-native";
+// import { LoginForm } from "~/components/login/login-form";
+import { LoginForm } from "@chat-app/features";
 import { GalleryVerticalEnd } from "lucide-react-native";
 
-import { LoginForm } from "~/components/login/login-form";
 import { Text } from "~/components/ui/text";
 
 export function LoginScreen() {
