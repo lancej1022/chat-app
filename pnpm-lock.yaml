@@ -357,7 +357,7 @@ importers:
         version: 1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.13.11)(typescript@5.6.3)))
     devDependencies:
       '@acme/tsconfig':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../../tooling/typescript
       '@babel/preset-env':
         specifier: ^7.26.0
@@ -694,6 +694,9 @@ importers:
       '@acme/tailwind-config':
         specifier: workspace:*
         version: link:../../tooling/tailwind
+      '@acme/tsconfig':
+        specifier: workspace:^
+        version: link:../../tooling/typescript
       '@babel/preset-env':
         specifier: 'catalog:'
         version: 7.26.9(@babel/core@7.26.10)

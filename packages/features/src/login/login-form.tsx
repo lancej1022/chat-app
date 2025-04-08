@@ -72,7 +72,11 @@ export function LoginForm({
           </View>
           <Input id="password" secureTextEntry={true} />
         </View>
-        <Button type="submit" className="w-full">
+        <Button
+          // @ts-expect-error -- TODO: not sure if `type` is valid or not
+          type="submit"
+          className="w-full"
+        >
           <Text>Login</Text>
         </Button>
         <View className="z-10 flex flex-row items-center justify-around gap-2 bg-background">
