@@ -23,7 +23,7 @@
       "outputs": [".cache/.eslintcache"]
     },
     "test": {
-      "dependsOn": ["^topo", "^build"],
+      "dependsOn": ["^topo", "^build", "build"],
       "outputs": ["test-results"]
     },
     "typecheck": {

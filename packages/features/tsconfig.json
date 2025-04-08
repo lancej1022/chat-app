@@ -1,25 +1,17 @@
 {
+  "extends": ["@acme/tsconfig/internal-package.json"],
   "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "jsxImportSource": "nativewind",
     "target": "ESNext",
     "module": "ESNext",
     "lib": ["DOM", "ESNext"],
-    "jsx": "react-jsx",
-    "jsxImportSource": "nativewind",
-    "moduleResolution": "bundler",
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "sourceMap": true,
-    "declarationMap": true,
-    "declaration": true,
-    "baseUrl": ".",
     "paths": {
       "~/*": ["src/*"]
     },
     "types": ["nativewind/types"],
-    "outDir": "dist",
-    "strict": true,
-    "allowSyntheticDefaultImports": true
+    "outDir": "dist"
   },
-  "include": ["src", "**/*.ts", "**/*.tsx", "nativewind-env.d.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src", "**/*.ts", "**/*.tsx", "nativewind-env.d.ts"]
 }

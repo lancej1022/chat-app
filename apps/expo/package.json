@@ -6,7 +6,7 @@
   "scripts": {
     "//comment": "`android:dev-build` seems to be the command you want to run for local development builds and running via android emulator",
     "android:dev-build": "expo run:android",
-    "build:web": "expo export -p web --output-dir=dist",
+    "build": "expo export -p web --output-dir=dist",
     "serve:web": "expo serve",
     "clean": "git clean -xdf .cache .expo .turbo android ios node_modules",
     "dev": "expo start",

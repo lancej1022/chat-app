@@ -695,7 +695,7 @@ importers:
         specifier: workspace:*
         version: link:../../tooling/tailwind
       '@acme/tsconfig':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../../tooling/typescript
       '@babel/preset-env':
         specifier: 'catalog:'
@@ -794,7 +794,7 @@ importers:
   packages/features:
     dependencies:
       '@chat-app/base-component-lib':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../base-component-lib
       '@rn-primitives/accordion':
         specifier: 'catalog:'
@@ -920,6 +920,9 @@ importers:
       '@acme/tailwind-config':
         specifier: workspace:*
         version: link:../../tooling/tailwind
+      '@acme/tsconfig':
+        specifier: workspace:^
+        version: link:../../tooling/typescript
       '@babel/preset-env':
         specifier: 'catalog:'
         version: 7.26.9(@babel/core@7.26.10)

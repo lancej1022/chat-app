@@ -26,7 +26,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@chat-app/base-component-lib": "workspace:^",
+    "@chat-app/base-component-lib": "workspace:*",
     "@rn-primitives/accordion": "catalog:",
     "@rn-primitives/alert-dialog": "catalog:",
     "@rn-primitives/aspect-ratio": "catalog:",
@@ -70,6 +70,7 @@
   },
   "devDependencies": {
     "@acme/tailwind-config": "workspace:*",
+    "@acme/tsconfig": "workspace:^",
     "@babel/preset-env": "catalog:",
     "@babel/preset-react": "^7.25.9",
     "@eslint/js": "^9.13.0",
