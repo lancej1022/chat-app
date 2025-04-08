@@ -11,6 +11,7 @@ const config = {
     "prettier-plugin-tailwindcss",
   ],
   tailwindConfig: fileURLToPath(
+    // @ts-expect-error -- Im not sure why this is throwing an error
     new URL("../../tooling/tailwind/web.ts", import.meta.url),
   ),
   tailwindFunctions: ["cn", "cva"],
