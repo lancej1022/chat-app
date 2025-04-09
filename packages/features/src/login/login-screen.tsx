@@ -1,8 +1,8 @@
 import { Image, View } from "react-native";
 import { Text } from "@chat-app/base-component-lib";
-// import { LoginForm } from "~/components/login/login-form";
-import { LoginForm } from "@chat-app/features";
 import { GalleryVerticalEnd } from "lucide-react-native";
+
+import { LoginForm } from "./login-form";
 
 function Branding() {
   return (

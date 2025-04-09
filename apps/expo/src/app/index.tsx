@@ -1,10 +1,7 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-
 // import { useQueryClient } from "@tanstack/react-query";
 
-import { LoginScreen } from "~/components/login/login-screen";
-
-// import { Button, Checkbox, Text } from "@chat-app/base-component-lib";
+import { LoginScreen } from "@chat-app/features";
 
 export default function Index() {
   // const queryClient = useQueryClient();

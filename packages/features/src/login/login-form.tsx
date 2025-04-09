@@ -9,8 +9,6 @@ import {
   Text,
 } from "@chat-app/base-component-lib";
 
-// import { Checkbox } from "../ui/checkbox";
-
 function HorizontalBar() {
   return <View className="h-[1px] flex-1 bg-border" />;
 }
