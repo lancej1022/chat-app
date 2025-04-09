@@ -68,6 +68,7 @@
     "tailwindcss-animate": "catalog:"
   },
   "devDependencies": {
+    "@acme/eslint-config": "workspace:^",
     "@acme/tailwind-config": "workspace:*",
     "@acme/tsconfig": "workspace:*",
     "@babel/preset-env": "catalog:",

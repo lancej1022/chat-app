@@ -4,6 +4,16 @@
       "mode": "auto"
     }
   ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   // TODO: might just want to specify this in `web` so that VS code isnt constantly reindexing
   "files.watcherExclude": {
     "**/routeTree.gen.ts": true

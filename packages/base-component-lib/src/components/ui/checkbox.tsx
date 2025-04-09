@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Platform } from "react-native";
 
+import type { RootProps, RootRef } from "../primitives/checkbox/types";
 // import * as CheckboxPrimitive from "@rn-primitives/checkbox";
 import { Indicator, Root } from "~/components/primitives/checkbox/checkbox";
 import { Check } from "~/lib/icons/Check";
 import { cn } from "~/lib/utils";
-import { RootProps, RootRef } from "../primitives/checkbox/types";
 
 const Checkbox = React.forwardRef<RootRef, RootProps>(
   ({ className, ...props }, ref) => {

@@ -1,6 +1,10 @@
-import { X } from 'lucide-react-native';
-import { iconWithClassName, LucidePropsWithClassName } from './iconWithClassName';
+import type { FunctionComponent } from "react";
+import { X } from "lucide-react-native";
+
+import type { LucidePropsWithClassName } from "./iconWithClassName";
+import { iconWithClassName } from "./iconWithClassName";
+
 iconWithClassName(X);
-import { FunctionComponent } from 'react';
+
 const XAlias: FunctionComponent<LucidePropsWithClassName> = X;
 export { XAlias as X };
