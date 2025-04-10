@@ -6,6 +6,7 @@ module.exports = {
   content: [
     "./src/**/*.{ts,tsx}",
     "../../packages/base-component-lib/dist/**/*.{js,cjs}",
+    "../../packages/features/dist/**/*.{js,cjs}",
   ],
   presets: [require("nativewind/preset")],
   theme: {

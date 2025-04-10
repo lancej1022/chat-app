@@ -22,8 +22,8 @@ function Branding() {
 
 export function LoginScreen() {
   return (
-    <View className="min-h-screen items-center justify-center">
-      <View className="flex flex-col gap-5">
+    <View className="flex min-h-screen flex-row items-center justify-center">
+      <View className="flex flex-1 flex-col gap-5">
         <Branding />
 
         <View
@@ -35,7 +35,7 @@ export function LoginScreen() {
           </View>
         </View>
       </View>
-      <View className="relative hidden bg-muted lg:block">
+      <View className="relative hidden bg-muted lg:flex lg:flex-shrink lg:flex-grow">
         <Image
           // source={require('@chat-app/assets/placeholder.svg')} TODO: add placeholder image
           alt="Image"
