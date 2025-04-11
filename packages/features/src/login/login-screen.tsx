@@ -37,8 +37,9 @@ export function LoginScreen() {
       </View>
       <View className="relative hidden bg-muted lg:flex lg:flex-shrink lg:flex-grow">
         <Image
+          // TODO: specify an image source
           // source={require('@chat-app/assets/placeholder.svg')} TODO: add placeholder image
-          alt="Image"
+          alt="chat app company logo"
           className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
         />
       </View>
