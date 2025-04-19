@@ -10,7 +10,7 @@
     "paths": {
       "~/*": ["src/*"]
     },
-    "types": ["nativewind/types"],
+    "types": ["nativewind/types", "@types/react-native-web"],
     "outDir": "dist"
   },
   "include": ["src", "**/*.ts", "**/*.tsx", "nativewind-env.d.ts"],
