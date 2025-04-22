@@ -18,6 +18,7 @@ type userResponse struct {
 	Id          uuid.UUID `json:"id"`
 }
 
+// TODO: some of this logic overlaps with handleSignup -- extract shared logic that should be identical into a helper function
 func (cfg *apiConfig) handleAddUser(w http.ResponseWriter, r *http.Request) {
 	// TODO: should this be shared with `auth.go`?
 	type parameters struct {

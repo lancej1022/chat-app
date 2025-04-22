@@ -10,8 +10,8 @@ import (
 	"github.com/google/uuid"
 )
 
-// TODO: some of this logic overlaps with handleSignup -- extract shared logic that should be identical into a helper function
-func (cfg *apiConfig) handleLogin(w http.ResponseWriter, r *http.Request) {
+// TODO: some of this logic overlaps with handleLogin -- extract shared logic that should be identical into a helper function
+func (cfg *apiConfig) handleSignup(w http.ResponseWriter, r *http.Request) {
 	type parameters struct {
 		Email    string `json:"email"`
 		Password string `json:"password"`
@@ -30,18 +30,22 @@ func (cfg *apiConfig) handleLogin(w http.ResponseWriter, r *http.Request) {
 	params := parameters{}
 	err := decoder.Decode(&params)
 	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Something went wrong decoding the request body", err)
+		respondWithError(w, http.StatusBadRequest, "Something went wrong decoding the request", err)
 		return
 	}
 
-	user, err := cfg.db.GetUserByEmail(r.Context(), params.Email)
+	hashedPass, err := auth.HashPassword(params.Password)
 	if err != nil {
-		respondWithError(w, http.StatusUnauthorized, "Incorrect email or password.", err)
+		respondWithError(w, http.StatusInternalServerError, "Unable to generate password", err)
 		return
 	}
 
-	if ok := auth.CheckPasswordHash(params.Password, user.HashedPassword); ok != nil {
-		respondWithError(w, http.StatusUnauthorized, "Incorrect email or password.", err)
+	user, err := cfg.db.CreateUser(r.Context(), database.CreateUserParams{
+		Email:          params.Email,
+		HashedPassword: hashedPass,
+	})
+	if err != nil {
+		respondWithError(w, http.StatusInternalServerError, "Something went wrong when creating the user", err)
 		return
 	}
 
@@ -50,6 +54,7 @@ func (cfg *apiConfig) handleLogin(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusInternalServerError, "Couldn't create JWT", err)
 		return
 	}
+
 	refreshToken, err := auth.MakeRefreshToken()
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, "Couldn't create refresh token", err)
@@ -69,10 +74,10 @@ func (cfg *apiConfig) handleLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	respondWithJSON(w, http.StatusOK, returnVals{
+	respondWithJSON(w, http.StatusCreated, returnVals{
 		Id:           user.ID,
-		IsChirpyRed:  user.IsChirpyRed,
 		Email:        user.Email,
+		IsChirpyRed:  user.IsChirpyRed,
 		CreatedAt:    user.CreatedAt,
 		UpdatedAt:    user.UpdatedAt,
 		Token:        accessToken,
