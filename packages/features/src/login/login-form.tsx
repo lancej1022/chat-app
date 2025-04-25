@@ -8,6 +8,9 @@ import {
   P,
   Text,
 } from "@chat-app/base-component-lib";
+import { useForm } from "@tanstack/react-form";
+
+import { signupBody } from "~/api/generated/chatAppAPI.zod";
 
 function HorizontalBar() {
   return <View className="h-[1px] flex-1 bg-border" />;
@@ -37,8 +40,26 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"form">) {
+  const form = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    validators: { onBlur: signupBody },
+    onSubmit: (data) => {
+      console.log("data:", data);
+    },
+  });
+
   return (
+    // TODO: need to figure out how to make this trigger via `Enter` so web isnt borked
+    // This might be doable by embedding a child `form` element and handling the submit event -- https://discord.com/channels/719702312431386674/1277546385411149824/1277658808755159152
+    // but it will need to be tested against `expo` to see if that works
     <View
+      onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        void form.handleSubmit();
+      }}
       // @ts-expect-error -- TODO: idk why this is throwing an error, but it works fine on web
       role="form"
       className={cn("flex flex-col gap-6", className)}
@@ -54,22 +75,68 @@ export function LoginForm({
       </View>
       <View className="grid gap-6">
         <View className="grid gap-2">
-          <Label htmlFor="email">Email</Label>
-          <Input id="email" placeholder="m@example.com" />
+          <form.Field
+            name="email"
+            children={(field) => (
+              <>
+                <Label htmlFor={field.name}>Email</Label>
+                <Input
+                  id={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChangeText={field.handleChange}
+                  placeholder="m@example.com"
+                  aria-required={true}
+                />
+                {field.state.meta.isTouched &&
+                  field.state.meta.errors.length > 0 && (
+                    <em>
+                      {field.state.meta.errors
+                        .map((err) => err?.message)
+                        .join(",")}
+                    </em>
+                  )}
+              </>
+            )}
+          />
         </View>
         <View className="grid gap-2">
-          <View className="flex flex-row items-center">
-            <Label htmlFor="password">Password</Label>
-            <Text
-              href="#yeet"
-              className="ml-auto text-sm underline-offset-4 hover:underline"
-            >
-              Forgot your password?
-            </Text>
-          </View>
-          <Input id="password" secureTextEntry={true} />
+          <form.Field
+            name="password"
+            children={(field) => (
+              <>
+                <View className="flex flex-row items-center">
+                  <Label htmlFor={field.name}>Password</Label>
+                  <Text
+                    href="#yeet"
+                    className="ml-auto text-sm underline-offset-4 hover:underline"
+                  >
+                    Forgot your password?
+                  </Text>
+                </View>
+                <Input
+                  id={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChangeText={field.handleChange}
+                  secureTextEntry={true}
+                  aria-required={true}
+                />
+                {field.state.meta.isTouched &&
+                  field.state.meta.errors.length > 0 && (
+                    <em>
+                      {field.state.meta.errors
+                        .map((err) => err?.message)
+                        .join(",")}
+                    </em>
+                  )}
+              </>
+            )}
+          />
         </View>
         <Button
+          // eslint-disable-next-line @typescript-eslint/unbound-method
+          onPress={form.handleSubmit}
           // @ts-expect-error -- TODO: not sure if `type` is valid or not
           type="submit"
           className="w-full"

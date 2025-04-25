@@ -346,6 +346,9 @@ importers:
       tailwindcss-animate:
         specifier: 'catalog:'
         version: 1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.13.11)(typescript@5.8.2)))
+      zod:
+        specifier: 'catalog:'
+        version: 3.24.2
     devDependencies:
       '@acme/tsconfig':
         specifier: workspace:*
@@ -859,6 +862,9 @@ importers:
       '@rn-primitives/types':
         specifier: 'catalog:'
         version: 1.1.0(react-native-web@0.19.13(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-native@0.78.0(@babel/core@7.26.10)(@babel/preset-env@7.26.9(@babel/core@7.26.10))(@react-native-community/cli-server-api@13.6.9(bufferutil@4.0.8))(@types/react@19.0.12)(bufferutil@4.0.8)(react@19.0.0))(react@19.0.0)
+      '@tanstack/react-form':
+        specifier: ^1.6.3
+        version: 1.6.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@tanstack/react-query':
         specifier: 'catalog:'
         version: 5.69.0(react@19.0.0)
@@ -877,9 +883,6 @@ importers:
       lucide-react-native:
         specifier: 'catalog:'
         version: 0.454.0(react-native-svg@15.11.2(react-native@0.78.0(@babel/core@7.26.10)(@babel/preset-env@7.26.9(@babel/core@7.26.10))(@react-native-community/cli-server-api@13.6.9(bufferutil@4.0.8))(@types/react@19.0.12)(bufferutil@4.0.8)(react@19.0.0))(react@19.0.0))(react-native@0.78.0(@babel/core@7.26.10)(@babel/preset-env@7.26.9(@babel/core@7.26.10))(@react-native-community/cli-server-api@13.6.9(bufferutil@4.0.8))(@types/react@19.0.12)(bufferutil@4.0.8)(react@19.0.0))(react@19.0.0)
-      msw:
-        specifier: ^2.7.5
-        version: 2.7.5(@types/node@22.13.11)(typescript@5.8.2)
       nativewind:
         specifier: 'catalog:'
         version: 4.1.23(d05cba91a55f3e753601a7ebb11800bd)
@@ -980,6 +983,9 @@ importers:
       globby:
         specifier: ^14.0.2
         version: 14.1.0
+      msw:
+        specifier: ^2.7.5
+        version: 2.7.5(@types/node@22.13.11)(typescript@5.8.2)
       orval:
         specifier: ^7.8.0
         version: 7.8.0(openapi-types@12.1.3)
@@ -3963,12 +3969,27 @@ packages:
     peerDependencies:
       storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
 
+  '@tanstack/form-core@1.6.3':
+    resolution: {integrity: sha512-0m+F3vOplArF5yDzBOFpMeM+3cGjgRmtVgfi3z5+Bzcc4F8AkXngRay+PmzY0z8K3Trz7EAqmJWMB9T+LlZWoA==}
+
   '@tanstack/history@1.114.29':
     resolution: {integrity: sha512-OTRMhwidScQSA0xsc5OCtm3K/oAChe47jy1e4OY3VpXUnKrI7C8iwfQ9XDRdpdsRASH2xi6P5I0+7ksFBehaQQ==}
     engines: {node: '>=12'}
 
   '@tanstack/query-core@5.69.0':
     resolution: {integrity: sha512-Kn410jq6vs1P8Nm+ZsRj9H+U3C0kjuEkYLxbiCyn3MDEiYor1j2DGVULqAz62SLZtUZ/e9Xt6xMXiJ3NJ65WyQ==}
+
+  '@tanstack/react-form@1.6.3':
+    resolution: {integrity: sha512-JuooyQ1bqIn3zC0wWCJB4n1UTyFZAF1Z4IWduUt6l356CoT78KTD56umRYLv3CirJqvYoa9kWOQKyjrVTmTNqw==}
+    peerDependencies:
+      '@tanstack/react-start': ^1.112.0
+      react: ^17.0.0 || ^18.0.0 || ^19.0.0
+      vinxi: ^0.5.0
+    peerDependenciesMeta:
+      '@tanstack/react-start':
+        optional: true
+      vinxi:
+        optional: true
 
   '@tanstack/react-query@5.69.0':
     resolution: {integrity: sha512-Ift3IUNQqTcaFa1AiIQ7WCb/PPy8aexZdq9pZWLXhfLcLxH0+PZqJ2xFImxCpdDZrFRZhLJrh76geevS5xjRhA==}
@@ -5096,6 +5117,9 @@ packages:
       supports-color:
         optional: true
 
+  decode-formdata@0.9.0:
+    resolution: {integrity: sha512-q5uwOjR3Um5YD+ZWPOF/1sGHVW9A5rCrRwITQChRXlmPkxDFBqCm4jNTIVdGHNH9OnR+V9MoZVgRhsFb+ARbUw==}
+
   decode-uri-component@0.2.2:
     resolution: {integrity: sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==}
     engines: {node: '>=0.10'}
@@ -5176,6 +5200,9 @@ packages:
 
   detect-node-es@1.1.0:
     resolution: {integrity: sha512-ypdmJU/TbBby2Dxibuv7ZLW3Bs1QEmM7nHjEANfohJLvE0XVujisn1qPJcZxg+qDucsr+bP6fLD1rPS3AhJ7EQ==}
+
+  devalue@5.1.1:
+    resolution: {integrity: sha512-maua5KUiapvEwiEAe+XnlZ3Rh0GD+qI1J/nb9vrJc3muPXvcF/8gXYTWF76+5DAqHyDUtOIImEuo0YKE9mshVw==}
 
   didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
@@ -12537,9 +12564,23 @@ snapshots:
     dependencies:
       storybook: 8.6.11(bufferutil@4.0.8)(prettier@3.5.3)
 
+  '@tanstack/form-core@1.6.3':
+    dependencies:
+      '@tanstack/store': 0.7.0
+
   '@tanstack/history@1.114.29': {}
 
   '@tanstack/query-core@5.69.0': {}
+
+  '@tanstack/react-form@1.6.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@tanstack/form-core': 1.6.3
+      '@tanstack/react-store': 0.7.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      decode-formdata: 0.9.0
+      devalue: 5.1.1
+      react: 19.0.0
+    transitivePeerDependencies:
+      - react-dom
 
   '@tanstack/react-query@5.69.0(react@19.0.0)':
     dependencies:
@@ -12625,7 +12666,7 @@ snapshots:
       babel-dead-code-elimination: 1.0.10
       chokidar: 3.6.0
       unplugin: 2.2.2
-      zod: 3.24.2
+      zod: 3.24.3
     optionalDependencies:
       '@tanstack/react-router': 1.114.34(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       vite: 5.4.10(@types/node@22.13.11)(lightningcss@1.29.2)(terser@5.37.0)
@@ -13894,6 +13935,8 @@ snapshots:
     dependencies:
       ms: 2.1.3
 
+  decode-formdata@0.9.0: {}
+
   decode-uri-component@0.2.2: {}
 
   deep-eql@5.0.2: {}
@@ -13960,6 +14003,8 @@ snapshots:
   detect-libc@2.0.3: {}
 
   detect-node-es@1.1.0: {}
+
+  devalue@5.1.1: {}
 
   didyoumean@1.2.2: {}
 

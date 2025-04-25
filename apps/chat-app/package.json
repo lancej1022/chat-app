@@ -46,7 +46,8 @@
     "react-native-web": "catalog:",
     "tailwind-merge": "catalog:",
     "tailwindcss": "catalog:",
-    "tailwindcss-animate": "catalog:"
+    "tailwindcss-animate": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@acme/tsconfig": "workspace:*",
