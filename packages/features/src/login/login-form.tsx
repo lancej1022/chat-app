@@ -56,17 +56,17 @@ export function LoginForm({
     // This might be doable by embedding a child `form` element and handling the submit event -- https://discord.com/channels/719702312431386674/1277546385411149824/1277658808755159152
     // but it will need to be tested against `expo` to see if that works
     <View
+      className={cn("flex flex-col gap-6", className)}
       onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         void form.handleSubmit();
       }}
       // @ts-expect-error -- TODO: idk why this is throwing an error, but it works fine on web
       role="form"
-      className={cn("flex flex-col gap-6", className)}
       {...props}
     >
       <View className="flex flex-col items-center gap-2 text-center">
-        <Text role="heading" aria-level={1} className="text-2xl font-bold">
+        <Text aria-level={1} className="text-2xl font-bold" role="heading">
           Login to your account
         </Text>
         <P className="text-balance text-sm text-muted-foreground">
@@ -76,17 +76,16 @@ export function LoginForm({
       <View className="grid gap-6">
         <View className="grid gap-2">
           <form.Field
-            name="email"
             children={(field) => (
               <>
                 <Label htmlFor={field.name}>Email</Label>
                 <Input
+                  aria-required={true}
                   id={field.name}
-                  value={field.state.value}
                   onBlur={field.handleBlur}
                   onChangeText={field.handleChange}
                   placeholder="m@example.com"
-                  aria-required={true}
+                  value={field.state.value}
                 />
                 {field.state.meta.isTouched &&
                   field.state.meta.errors.length > 0 && (
@@ -98,29 +97,29 @@ export function LoginForm({
                   )}
               </>
             )}
+            name="email"
           />
         </View>
         <View className="grid gap-2">
           <form.Field
-            name="password"
             children={(field) => (
               <>
                 <View className="flex flex-row items-center">
                   <Label htmlFor={field.name}>Password</Label>
                   <Text
-                    href="#yeet"
                     className="ml-auto text-sm underline-offset-4 hover:underline"
+                    href="#yeet"
                   >
                     Forgot your password?
                   </Text>
                 </View>
                 <Input
+                  aria-required={true}
                   id={field.name}
-                  value={field.state.value}
                   onBlur={field.handleBlur}
                   onChangeText={field.handleChange}
                   secureTextEntry={true}
-                  aria-required={true}
+                  value={field.state.value}
                 />
                 {field.state.meta.isTouched &&
                   field.state.meta.errors.length > 0 && (
@@ -132,14 +131,15 @@ export function LoginForm({
                   )}
               </>
             )}
+            name="password"
           />
         </View>
         <Button
+          className="w-full"
           // eslint-disable-next-line @typescript-eslint/unbound-method
           onPress={form.handleSubmit}
           // @ts-expect-error -- TODO: not sure if `type` is valid or not
           type="submit"
-          className="w-full"
         >
           <Text>Login</Text>
         </Button>
@@ -150,17 +150,17 @@ export function LoginForm({
           </Text>
           <HorizontalBar />
         </View>
-        <Button variant="outline" className="flex w-full flex-row">
+        <Button className="flex w-full flex-row" variant="outline">
           {/* <GitHubIcon /> */}
           <Text className="ml-2">Login with GitHub</Text>
         </Button>
       </View>
       <View
-        data-testid="login-form-footer"
         className="flex flex-row items-center justify-center text-center text-sm"
+        data-testid="login-form-footer"
       >
         <Text>Don&apos;t have an account? </Text>
-        <Text href="#" className="underline underline-offset-4">
+        <Text className="underline underline-offset-4" href="#">
           Sign up
         </Text>
       </View>

@@ -15,6 +15,7 @@ export default [
       ...reactPlugin.configs["jsx-runtime"].rules,
       ...hooksPlugin.configs.recommended.rules,
       "react-compiler/react-compiler": "error",
+      "react/jsx-sort-props": "error",
     },
     languageOptions: {
       globals: {

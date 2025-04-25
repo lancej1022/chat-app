@@ -7,6 +7,9 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
+  "eslint.rules.customizations": [
+    { "rule": "*", "fixable": true, "severity": "warn" }
+  ],
   "eslint.validate": [
     "javascript",
     "javascriptreact",

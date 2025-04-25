@@ -27,8 +27,8 @@ export function LoginScreen() {
         <Branding />
 
         <View
-          data-testid="login-form-wrap"
           className="flex flex-shrink flex-grow basis-auto flex-row items-baseline justify-center"
+          data-testid="login-form-wrap"
         >
           <View className="w-full max-w-xs">
             <LoginForm />

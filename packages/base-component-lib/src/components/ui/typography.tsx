@@ -10,13 +10,13 @@ const H1 = React.forwardRef<TextRef, SlottableTextProps>(
     const Component = asChild ? Slot.Text : RNText;
     return (
       <Component
-        role="heading"
         aria-level="1"
         className={cn(
           "text-4xl font-extrabold tracking-tight text-foreground web:select-text web:scroll-m-20 lg:text-5xl",
           className,
         )}
         ref={ref}
+        role="heading"
         {...props}
       />
     );
@@ -30,13 +30,13 @@ const H2 = React.forwardRef<TextRef, SlottableTextProps>(
     const Component = asChild ? Slot.Text : RNText;
     return (
       <Component
-        role="heading"
         aria-level="2"
         className={cn(
           "border-b border-border pb-2 text-3xl font-semibold tracking-tight text-foreground first:mt-0 web:select-text web:scroll-m-20",
           className,
         )}
         ref={ref}
+        role="heading"
         {...props}
       />
     );
@@ -50,13 +50,13 @@ const H3 = React.forwardRef<TextRef, SlottableTextProps>(
     const Component = asChild ? Slot.Text : RNText;
     return (
       <Component
-        role="heading"
         aria-level="3"
         className={cn(
           "text-2xl font-semibold tracking-tight text-foreground web:select-text web:scroll-m-20",
           className,
         )}
         ref={ref}
+        role="heading"
         {...props}
       />
     );
@@ -70,13 +70,13 @@ const H4 = React.forwardRef<TextRef, SlottableTextProps>(
     const Component = asChild ? Slot.Text : RNText;
     return (
       <Component
-        role="heading"
         aria-level="4"
         className={cn(
           "text-xl font-semibold tracking-tight text-foreground web:select-text web:scroll-m-20",
           className,
         )}
         ref={ref}
+        role="heading"
         {...props}
       />
     );
@@ -105,13 +105,13 @@ const BlockQuote = React.forwardRef<TextRef, SlottableTextProps>(
     const Component = asChild ? Slot.Text : RNText;
     return (
       <Component
-        // @ts-expect-error - role of blockquote renders blockquote element on the web
-        role={Platform.OS === "web" ? "blockquote" : undefined}
         className={cn(
           "native:mt-4 native:pl-3 mt-6 border-l-2 border-border pl-6 text-base italic text-foreground web:select-text",
           className,
         )}
         ref={ref}
+        // @ts-expect-error - role of blockquote renders blockquote element on the web
+        role={Platform.OS === "web" ? "blockquote" : undefined}
         {...props}
       />
     );
@@ -125,13 +125,13 @@ const Code = React.forwardRef<TextRef, SlottableTextProps>(
     const Component = asChild ? Slot.Text : RNText;
     return (
       <Component
-        // @ts-expect-error - role of code renders code element on the web
-        role={Platform.OS === "web" ? "code" : undefined}
         className={cn(
           "relative rounded-md bg-muted px-[0.3rem] py-[0.2rem] text-sm font-semibold text-foreground web:select-text",
           className,
         )}
         ref={ref}
+        // @ts-expect-error - role of code renders code element on the web
+        role={Platform.OS === "web" ? "code" : undefined}
         {...props}
       />
     );

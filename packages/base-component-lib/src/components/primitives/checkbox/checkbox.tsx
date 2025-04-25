@@ -70,17 +70,17 @@ const Trigger = forwardRef<PressableRef, SlottablePressableProps>(
     const Component = asChild ? Slot.Pressable : Pressable;
     return (
       <Component
-        ref={ref}
-        nativeID={nativeID}
-        aria-disabled={disabled}
-        role="checkbox"
-        aria-checked={checked}
-        onPress={onPress}
         accessibilityState={{
           checked,
           disabled,
         }}
+        aria-checked={checked}
+        aria-disabled={disabled}
         disabled={disabled}
+        nativeID={nativeID}
+        onPress={onPress}
+        ref={ref}
+        role="checkbox"
         {...props}
       />
     );
@@ -102,9 +102,9 @@ const Indicator = forwardRef<IndicatorRef, IndicatorProps>(
     const Component = asChild ? Slot.View : View;
     return (
       <Component
-        ref={ref}
         aria-disabled={disabled}
         aria-hidden={!(forceMount || checked)}
+        ref={ref}
         role={"presentation"}
         {...props}
       />

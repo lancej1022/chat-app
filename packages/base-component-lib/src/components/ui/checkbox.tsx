@@ -16,12 +16,12 @@ const Checkbox = React.forwardRef<RootRef, RootProps>(
     );
 
     return (
-      <Root ref={ref} className={rootClassName} {...props}>
+      <Root className={rootClassName} ref={ref} {...props}>
         <Indicator className={cn("h-full w-full items-center justify-center")}>
           <Check
+            className="text-primary-foreground"
             size={12}
             strokeWidth={Platform.OS === "web" ? 2.5 : 3.5}
-            className="text-primary-foreground"
           />
         </Indicator>
       </Root>
