@@ -10,6 +10,7 @@ import {
 } from "@chat-app/base-component-lib";
 import { useForm } from "@tanstack/react-form";
 
+import { useSignup } from "~/api/generated/chatAppAPI";
 import { signupBody } from "~/api/generated/chatAppAPI.zod";
 
 function HorizontalBar() {
@@ -40,6 +41,8 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"form">) {
+  const { mutate, isPending } = useSignup();
+
   const form = useForm({
     defaultValues: {
       email: "",
@@ -48,6 +51,9 @@ export function LoginForm({
     validators: { onBlur: signupBody },
     onSubmit: (data) => {
       console.log("data:", data);
+      const { email, password } = data.value;
+      // TODO: is there a way to make the generated `orval` code accept `{email, password}` instead of `{data: {email, password} }`?
+      mutate({ data: { email, password } });
     },
   });
 
@@ -136,6 +142,8 @@ export function LoginForm({
         </View>
         <Button
           className="w-full"
+          // TODO: this isnt accessible -- need to use aria-disabled or something
+          disabled={isPending}
           // eslint-disable-next-line @typescript-eslint/unbound-method
           onPress={form.handleSubmit}
           // @ts-expect-error -- TODO: not sure if `type` is valid or not

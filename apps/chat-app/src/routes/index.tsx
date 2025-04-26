@@ -7,26 +7,18 @@ import {
   // , Link
 } from "@tanstack/react-router";
 
-// import { LoginScreen } from "~/components/login/login-screen";
-
 // import { ThemeToggle } from "~/components/ThemeToggle";
 
 // import { Button, Checkbox, Text } from '@chat-app/base-component-lib';
-// import { LoginScreen } from '@chat-app/features';
 
 export const Route = createFileRoute("/")({
   component: App,
 });
 
+// TODO: add theme toggle, etc -- although maybe that should happen in `_layout.tsx`?
 function App() {
-  // debugger;
-  // const [checked, setChecked] = useState(false);
   return (
     <>
-      {/* <Button>
-        <Text>Yeet</Text>
-      </Button>
-      <Checkbox checked={checked} onCheckedChange={setChecked} /> */}
       <LoginScreen />
     </>
   );
