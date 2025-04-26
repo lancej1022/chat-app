@@ -6,18 +6,16 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"sync/atomic"
 
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
 type apiConfig struct {
-	db             *database.Queries
-	platform       string
-	jwtSecret      string
-	polkaKey       string
-	fileserverHits atomic.Int32
+	db        *database.Queries
+	platform  string
+	jwtSecret string
+	polkaKey  string
 }
 
 func main() {
@@ -30,11 +28,10 @@ func main() {
 	dbQueries := database.New(db)
 	port := "8080"
 	apiCfg := &apiConfig{
-		fileserverHits: atomic.Int32{},
-		db:             dbQueries,
-		platform:       os.Getenv("PLATFORM"),
-		jwtSecret:      os.Getenv("JWT_SECRET"),
-		polkaKey:       os.Getenv("POLKA_KEY"),
+		db:        dbQueries,
+		platform:  os.Getenv("PLATFORM"),
+		jwtSecret: os.Getenv("JWT_SECRET"),
+		polkaKey:  os.Getenv("POLKA_KEY"),
 	}
 	// ServeMux is an HTTP request multiplexer.
 	// It matches the URL of each incoming request against a list of registered patterns
@@ -59,7 +56,7 @@ func main() {
 	mux.HandleFunc("GET /api/chirps/{id}", apiCfg.handleGetChirp)
 
 	mux.HandleFunc("POST /admin/reset", apiCfg.handlerReset)
-
+	// TODO: add a CORS middleware somewhere around here...
 	srv := &http.Server{
 		Addr:    ":" + port,
 		Handler: mux,
