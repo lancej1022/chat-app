@@ -15,11 +15,11 @@ func (s *Server) RegisterRoutes() http.Handler {
 	mux := http.NewServeMux()
 
 	// Register routes
-	mux.HandleFunc("/", s.HelloWorldHandler)
+	mux.HandleFunc("GET /", s.HelloWorldHandler)
 
-	mux.HandleFunc("/health", s.healthHandler)
+	mux.HandleFunc("GET /health", s.healthHandler)
 
-	mux.HandleFunc("/websocket", s.websocketHandler)
+	mux.HandleFunc("GET /websocket", s.websocketHandler)
 
 	// Wrap the mux with CORS middleware
 	return s.corsMiddleware(mux)
