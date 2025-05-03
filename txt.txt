@@ -1,68 +1,5 @@
-- Had good conversation with Shane previously (Design Manager)
-
-- recently did a greenfield RN rewrite
-    - was this a rewrite in Expo?
-    - How does the dev <-> design hand off typically work?
-    - 
-- Joel manages the team responsible for App Experience, component lib, etc
-- Adam did a lot of the initial rewrite
-- The team's code component library has fallen behind the Design System. Looking to help get it in sync
-    and improve the overall Dev Exp. Involves a LOT of ownership and evangelizing internally. 
-    Basically marketing it internally and building hype + stickiness. 
-    Also involves tons of building an awesome DevEX
-- Nick has also 
-
-5 Stages:
-- Design System lives in Figma, all tokens are in Figma
-- public roadmap -- 0
-
-
-
-
-
 ----
-Craig -- enterprise architect
-Nick -- checkout team
 
-
-----
-Lucas -- Customer.io
-Growth squad -- a/b testing, signup, experiments, etc
-
-
-
-
-
-----
-- Is NextJS pages or app router?
-- How do you feel about the product 
-- How does architecture review tend to work?
-- 
-
-
-
----
-Grow therapy -- Teju. Marketplace Experience (Tay Zhu)
-- 
--
--
-
-
-----
-PrizePicks Conversation w/ Brennan
-- Focus on big picture ideas, high level overview
-- Expect behavioral/cultural questions primarily, team fit, etc
-- BRING QUESTIONS PREPARED FOR THE INTERVIEW
-- start date would be every other week
-- base pay offered is 180k + 15% bonus
-- 
-
-
-
-
-
-----
-PrizePicks final round w/ Brenden Clerget ("cler-zhey")
 - (role) For this role in particular, are there any metrics youd like to see measured in order to demonstrate impact/results?
     It can be kinda tricky to measure the impact of component libraries, although I wouldnt call it impossible.
     "How much time are we spending with other teams during the design/conceptual phase? Does it feel like we can get through those 'conceptual'/POC stages faster?"
@@ -71,17 +8,34 @@ PrizePicks final round w/ Brenden Clerget ("cler-zhey")
 - How does developer productivity get prioritized by the business?
 "its hard to expect productivity and success out of an engineering org if they dont have the tools to do their job?"
 
+
+
+
+// - ask about feature flag usage
+- are they profitable?
+// - what do next steps look like?
+- How does planning out features/ etc look like then? Scrum, shape-up, etc. Sounds like Kanban primarily
 - (role) What would set someone apart in their first 90 days here? What does success look like early on?
+    asnwer -- Ideally deploying within first week. Highly productive engineers with a "can do" attitude 
 - (role) While I don't want to think too far ahead of myself, what does the promotion process look like at PrizePicks? Particularly when going from Sr to Staff
 - (org) Are there any upcoming initiatives or bets that you're particularly excited about?
-- (org) What is the overall headcount in the engineering org currently?
+
+// - (org) What is the overall headcount in the engineering org currently?
     - ~100 eng, some devops, some QA folks
-- (org) What’s the decision-making process like for architectural or large-scale changes? I know recently there was a migration to RN, so Im curious how that decision came about
-- (org) How is technical debt handled here? Are engineers able to advocate for long-term improvements that might pull efforts away from features slightly, or would you say that engineering is more "top-down" rather than "bottoms-up"?
-- (org) How is developer productivity measured at PrizePicks, if it is measured at all?
+// - (org) What’s the decision-making process like for architectural or large-scale changes? I know recently there was a migration to RN, so Im curious how that decision came about
+// - (org) How is technical debt handled here? Are engineers able to advocate for long-term improvements that might pull efforts away from features slightly, or would you say that engineering is more "top-down" rather than "bottoms-up"?
+// - (org) How is developer productivity measured at PrizePicks, if it is measured at all?
 - (business) What metrics or indicators define success for PrizePicks as a company right now, and how does the engineering team support them?
+
+
 - (business) How do you think the engineering org needs to evolve over the next year, or do you think its already in the state youd like it to be in?
 - (benefits) What support, if any, does PrizePicks have for continuous learning (eg courses, conferences)? The recruiter may have mentioned this but Ive forgotten
 - (benefits) Another one that was probably mentioned but has escaped me: does prizepicks do any sort of annual get-togethers in person?
 
 
+Bethany foote
+- improves to feature set for joining classes, billing, class enrollment flows, 
+- search recommendations
+- Growth team
+    - AI initiatives, lots of new feature development such as class summaries, parent-teacher messaging systems, 
+- 
