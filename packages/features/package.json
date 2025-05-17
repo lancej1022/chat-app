@@ -84,7 +84,7 @@
     "@rollup/plugin-node-resolve": "^15.3.0",
     "@storybook/react": "^8.2.9",
     "@storybook/test": "^8.2.9",
-    "@types/node": "^22.13.11",
+    "@types/node": "catalog:",
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
     "@types/react-native": "^0.73.0",

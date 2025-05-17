@@ -77,3 +77,6 @@ catalog:
   react-native-web: 0.19.13
   tailwind-merge: 2.5.4
   tailwindcss-animate: 1.0.7
+
+  # Node
+  "@types/node": 22.14.0

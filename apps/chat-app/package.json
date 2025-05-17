@@ -59,7 +59,7 @@
     "@rollup/plugin-node-resolve": "^15.3.0",
     "@tanstack/react-router-devtools": "^1.114.25",
     "@tanstack/router-plugin": "^1.114.25",
-    "@types/node": "^22.13.11",
+    "@types/node": "catalog:",
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
     "@types/react-native": "^0.73.0",
