@@ -1,8 +1,8 @@
 {
-  "extends": ["@acme/tsconfig/base.json", "fastify-tsconfig"],
+  "extends": "fastify-tsconfig",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
   },
-  "include": ["src", "**/*.ts"]
+  "include": ["@types", "src/**/*.ts"]
 }
