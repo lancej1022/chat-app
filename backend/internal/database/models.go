@@ -11,6 +11,14 @@ import (
 	"github.com/google/uuid"
 )
 
+type Chirp struct {
+	ID        uuid.UUID
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	Body      string
+	UserID    uuid.UUID
+}
+
 type RefreshToken struct {
 	Token     string
 	CreatedAt time.Time
