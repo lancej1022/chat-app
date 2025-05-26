@@ -21,6 +21,7 @@
     "sst": "3.9.33"
   },
   "devDependencies": {
+    "@acme/eslint-config": "workspace:^",
     "@eslint/js": "^9.13.0",
     "@hono/node-server": "^1.13.2",
     "@types/js-cookie": "^3.0.6",

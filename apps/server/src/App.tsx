@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { escapeLike } from "@rocicorp/zero";
 import { useQuery, useZero } from "@rocicorp/zero/react";
 import Cookies from "js-cookie";
-import { useState } from "react";
+
+import type { Schema } from "./schema";
 import { formatDate } from "./date";
 import { randInt } from "./rand";
 import { RepeatButton } from "./repeat-button";
-import { schema, Schema } from "./schema";
+import { schema } from "./schema";
 import { randomMessage } from "./test-data";
 
 function App() {
@@ -56,7 +58,7 @@ function App() {
         <div>
           <RepeatButton
             onTrigger={() => {
-              z.mutate.message.insert(randomMessage(users, mediums));
+              void z.mutate.message.insert(randomMessage(users, mediums));
             }}
           >
             Add Messages
@@ -65,7 +67,7 @@ function App() {
             onTrigger={(e) => {
               if (!viewer && !e.shiftKey) {
                 alert(
-                  "You must be logged in to delete. Hold shift to try anyway."
+                  "You must be logged in to delete. Hold shift to try anyway.",
                 );
                 return false;
               }
@@ -75,7 +77,7 @@ function App() {
               }
 
               const index = randInt(allMessages.length);
-              z.mutate.message.delete({ id: allMessages[index].id });
+              void z.mutate.message.delete({ id: allMessages[index].id });
               return true;
             }}
           >
@@ -105,8 +107,10 @@ function App() {
                   .then(() => {
                     location.reload();
                   })
-                  .catch((error) => {
-                    alert(`Failed to login: ${error.message}`);
+                  .catch((error: unknown) => {
+                    alert(
+                      `Failed to login: ${error instanceof Error ? error.message : "Unknown error"}`,
+                    );
                   });
               }}
             >
@@ -124,11 +128,11 @@ function App() {
               console.log("%cPrinting inspector output...", style);
               console.log(
                 "%cTo see pretty tables, leave devtools open, then press 'Inspect' button in main UI again.",
-                style
+                style,
               );
               console.log(
                 "%cSorry this is so ghetto I was too tired to make a debug dialog.",
-                style
+                style,
               );
 
               console.log("client:");
@@ -173,10 +177,10 @@ function App() {
         <div>
           Contains:
           <input
-            type="text"
-            placeholder="message"
             onChange={(e) => setFilterText(e.target.value)}
+            placeholder="message"
             style={{ flex: 1 }}
+            type="text"
           />
         </div>
       </div>
@@ -201,7 +205,7 @@ function App() {
           <em>No posts found 😢</em>
         </h3>
       ) : (
-        <table border={1} cellSpacing={0} cellPadding={6} width="100%">
+        <table border={1} cellPadding={6} cellSpacing={0} width="100%">
           <thead>
             <tr>
               <th>Sender</th>
@@ -222,7 +226,7 @@ function App() {
                   onMouseDown={(e) => {
                     if (message.senderID !== z.userID && !e.shiftKey) {
                       alert(
-                        "You aren't logged in as the sender of this message. Editing won't be permitted. Hold the shift key to try anyway."
+                        "You aren't logged in as the sender of this message. Editing won't be permitted. Hold the shift key to try anyway.",
                       );
                       return;
                     }
@@ -231,7 +235,7 @@ function App() {
                     if (body === null) {
                       return;
                     }
-                    z.mutate.message.update({
+                    void z.mutate.message.update({
                       id: message.id,
                       body,
                     });

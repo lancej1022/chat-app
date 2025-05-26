@@ -580,6 +580,9 @@ importers:
         specifier: 3.9.33
         version: 3.9.33
     devDependencies:
+      '@acme/eslint-config':
+        specifier: workspace:^
+        version: link:../../tooling/eslint
       '@eslint/js':
         specifier: ^9.13.0
         version: 9.23.0

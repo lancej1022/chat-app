@@ -1,5 +1,5 @@
+import type { Medium, Message, User } from "./schema";
 import { randBetween, randID, randInt } from "./rand";
-import { Medium, Message, User } from "./schema";
 
 const requests = [
   "Hey guys, is the zero package ready yet?",
@@ -23,7 +23,7 @@ const replies = [
 
 export function randomMessage(
   users: readonly User[],
-  mediums: readonly Medium[]
+  mediums: readonly Medium[],
 ): Message {
   const id = randID();
   const mediumID = mediums[randInt(mediums.length)].id;

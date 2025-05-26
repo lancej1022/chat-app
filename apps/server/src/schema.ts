@@ -5,18 +5,16 @@
 // See https://github.com/rocicorp/mono/blob/main/apps/zbugs/schema.ts
 // for more complex examples, including many-to-many.
 
+import type { ExpressionBuilder, PermissionsConfig, Row } from "@rocicorp/zero";
 import {
+  ANYONE_CAN,
+  boolean,
   createSchema,
   definePermissions,
-  ExpressionBuilder,
-  Row,
-  ANYONE_CAN,
-  table,
-  string,
-  boolean,
   number,
   relationships,
-  PermissionsConfig,
+  string,
+  table,
 } from "@rocicorp/zero";
 
 const message = table("message")
@@ -68,19 +66,21 @@ export type Medium = Row<typeof schema.tables.medium>;
 export type User = Row<typeof schema.tables.user>;
 
 // The contents of your decoded JWT.
-type AuthData = {
+interface AuthData {
   sub: string | null;
-};
+}
 
 export const permissions = definePermissions<AuthData, Schema>(schema, () => {
   const allowIfLoggedIn = (
     authData: AuthData,
-    { cmpLit }: ExpressionBuilder<Schema, keyof Schema["tables"]>
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    { cmpLit }: ExpressionBuilder<Schema, keyof Schema["tables"]>,
   ) => cmpLit(authData.sub, "IS NOT", null);
 
   const allowIfMessageSender = (
     authData: AuthData,
-    { cmp }: ExpressionBuilder<Schema, "message">
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    { cmp }: ExpressionBuilder<Schema, "message">,
   ) => cmp("senderID", "=", authData.sub ?? "");
 
   return {
