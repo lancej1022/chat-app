@@ -2,7 +2,10 @@ package main
 
 import (
 	"backend/internal/database"
+	"backend/sql/migrations"
 	"database/sql"
+	"fmt"
+	"io/fs"
 	"log"
 	"net/http"
 	"os"
@@ -10,6 +13,7 @@ import (
 
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
+	"github.com/pressly/goose/v3"
 )
 
 type apiConfig struct {
@@ -23,10 +27,17 @@ type apiConfig struct {
 func main() {
 	godotenv.Load()
 	dbURL := os.Getenv("DB_URL")
+	// TODO: Add a check to see if the database is running
 	db, err := sql.Open("postgres", dbURL)
 	if err != nil {
 		log.Fatalf("Error opening database: %v", err)
 	}
+
+	err = MigrateFs(db, migrations.FS, ".")
+	if err != nil {
+		panic(err)
+	}
+
 	dbQueries := database.New(db)
 	filepathRoot := "."
 	port := "8080"
@@ -66,4 +77,26 @@ func main() {
 	}
 	log.Printf("Serving files from %s on port: %s\n", filepathRoot, port)
 	log.Fatal(srv.ListenAndServe())
+}
+
+func MigrateFs(db *sql.DB, migrationFS fs.FS, migrationsDir string) error {
+	goose.SetBaseFS(migrationFS)
+	defer func() {
+		goose.SetBaseFS(nil)
+	}()
+	return Migrate(db, migrationsDir)
+}
+
+// Tell goose which database to use
+func Migrate(db *sql.DB, migrationsDir string) error {
+	err := goose.SetDialect("postgres")
+	if err != nil {
+		return fmt.Errorf("migrate:set-dialect %w", err)
+	}
+
+	err = goose.Up(db, migrationsDir)
+	if err != nil {
+		return fmt.Errorf("goose up: %w", err)
+	}
+	return nil
 }
