@@ -10,7 +10,9 @@ import (
 	"net/http"
 	"os"
 	"sync/atomic"
+	"time"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"github.com/pressly/goose/v3"
@@ -51,29 +53,56 @@ func main() {
 	// ServeMux is an HTTP request multiplexer.
 	// It matches the URL of each incoming request against a list of registered patterns
 	// and calls the handler for the pattern that most closely matches the URL.
-	mux := http.NewServeMux()
+	// mux := http.NewServeMux()
 	// If a pattern ends with a slash /, it matches all URL paths that have the same prefix.
 	// For example, a pattern /images/ matches /images/, /images/logo.png, and /images/css/style.css.
 
-	mux.HandleFunc("GET /api/healthz", handlerReadiness)
+	// mux.HandleFunc("GET /api/healthz", handlerReadiness)
 
-	mux.HandleFunc("POST /api/polka/webhooks", apiCfg.handleUpgradeToChirpyRed)
+	// mux.HandleFunc("POST /api/polka/webhooks", apiCfg.handleUpgradeToChirpyRed)
 
-	mux.HandleFunc("POST /api/users", apiCfg.handleAddUser)
-	mux.HandleFunc("PUT /api/users", apiCfg.handleUpdateUser)
-	mux.HandleFunc("POST /api/login", apiCfg.handleLogin)
-	mux.HandleFunc("POST /api/refresh", apiCfg.handleLoginRefresh)
-	mux.HandleFunc("POST /api/revoke", apiCfg.handleRevokeRefreshToken)
-	mux.HandleFunc("POST /api/chirps", apiCfg.handleChirp)
-	mux.HandleFunc("DELETE /api/chirps/{id}", apiCfg.handleDeleteChirp)
-	mux.HandleFunc("GET /api/chirps", apiCfg.handleGetChirps)
-	mux.HandleFunc("GET /api/chirps/{id}", apiCfg.handleGetChirp)
+	// mux.HandleFunc("POST /api/users", apiCfg.handleAddUser)
+	// mux.HandleFunc("PUT /api/users", apiCfg.handleUpdateUser)
+	// mux.HandleFunc("POST /api/login", apiCfg.handleLogin)
+	// mux.HandleFunc("POST /api/refresh", apiCfg.handleLoginRefresh)
+	// mux.HandleFunc("POST /api/revoke", apiCfg.handleRevokeRefreshToken)
+	// mux.HandleFunc("POST /api/chirps", apiCfg.handleChirp)
+	// mux.HandleFunc("DELETE /api/chirps/{id}", apiCfg.handleDeleteChirp)
+	// mux.HandleFunc("GET /api/chirps", apiCfg.handleGetChirps)
+	// mux.HandleFunc("GET /api/chirps/{id}", apiCfg.handleGetChirp)
 
-	mux.HandleFunc("POST /admin/reset", apiCfg.handlerReset)
+	// mux.HandleFunc("POST /admin/reset", apiCfg.handlerReset)
+	router := chi.NewRouter()
+
+	// router.Group(func(r chi.Router) {
+	// 	r.Use(a.Middleware.Authenticate)
+	// 	r.Get("/workouts/{id}", a.Middleware.RequireUser(a.WorkoutHandler.GetWorkoutByID))
+	// 	r.Post("/workouts", a.Middleware.RequireUser(a.WorkoutHandler.CreateWorkout))
+	// 	r.Put("/workouts/{id}", a.Middleware.RequireUser(a.WorkoutHandler.UpdateWorkoutById))
+	// 	r.Delete("/workouts/{id}", a.Middleware.RequireUser(a.WorkoutHandler.DeleteWorkout))
+	// })
+
+	router.Get("/api/healthz", handlerReadiness)
+	router.Post("/api/polka/webhooks", apiCfg.handleUpgradeToChirpyRed)
+	router.Post("/api/users", apiCfg.handleAddUser)
+	router.Put("/api/users", apiCfg.handleUpdateUser)
+	router.Post("/api/login", apiCfg.handleLogin)
+	router.Post("/api/refresh", apiCfg.handleLoginRefresh)
+	router.Post("/api/revoke", apiCfg.handleRevokeRefreshToken)
+	router.Post("/api/chirps", apiCfg.handleChirp)
+	router.Delete("/api/chirps/{id}", apiCfg.handleDeleteChirp)
+	router.Get("/api/chirps", apiCfg.handleGetChirps)
+	router.Get("/api/chirps/{id}", apiCfg.handleGetChirp)
+	router.Post("/admin/reset", apiCfg.handlerReset)
+	// return router
 
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: mux,
+		Addr:         ":" + port,
+		IdleTimeout:  time.Minute,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 30 * time.Second,
+		Handler:      router,
+		// Handler: mux,
 	}
 	log.Printf("Serving files from %s on port: %s\n", filepathRoot, port)
 	log.Fatal(srv.ListenAndServe())

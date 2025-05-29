@@ -56,3 +56,9 @@ dist/
 #tanstack
 dist-ssr
 *.local
+
+#backend
+backend/database/
+backend/database/postgres-data/
+backend/database/postgres-test-data/
+database
