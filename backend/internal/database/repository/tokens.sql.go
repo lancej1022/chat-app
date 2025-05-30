@@ -3,7 +3,7 @@
 //   sqlc v1.29.0
 // source: tokens.sql
 
-package database
+package repository
 
 import (
 	"context"
@@ -30,11 +30,11 @@ RETURNING token, created_at, updated_at, expires_at, revoked_at, user_id
 `
 
 type CreateRefreshTokenParams struct {
-	Token     string
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	ExpiresAt time.Time
-	UserID    uuid.UUID
+	Token     string    `json:"token"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	ExpiresAt time.Time `json:"expires_at"`
+	UserID    uuid.UUID `json:"user_id"`
 }
 
 func (q *Queries) CreateRefreshToken(ctx context.Context, arg CreateRefreshTokenParams) (RefreshToken, error) {

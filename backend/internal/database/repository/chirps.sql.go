@@ -3,7 +3,7 @@
 //   sqlc v1.29.0
 // source: chirps.sql
 
-package database
+package repository
 
 import (
 	"context"
@@ -24,8 +24,8 @@ RETURNING id, created_at, updated_at, body, user_id
 `
 
 type CreateChirpParams struct {
-	Body   string
-	UserID uuid.UUID
+	Body   string    `json:"body"`
+	UserID uuid.UUID `json:"user_id"`
 }
 
 func (q *Queries) CreateChirp(ctx context.Context, arg CreateChirpParams) (Chirp, error) {
@@ -80,7 +80,7 @@ func (q *Queries) GetChirps(ctx context.Context) ([]Chirp, error) {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Chirp
+	items := []Chirp{}
 	for rows.Next() {
 		var i Chirp
 		if err := rows.Scan(
@@ -115,7 +115,7 @@ func (q *Queries) GetChirpsByUserId(ctx context.Context, userID uuid.UUID) ([]Ch
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Chirp
+	items := []Chirp{}
 	for rows.Next() {
 		var i Chirp
 		if err := rows.Scan(

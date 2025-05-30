@@ -3,7 +3,7 @@
 //   sqlc v1.29.0
 // source: users.sql
 
-package database
+package repository
 
 import (
 	"context"
@@ -24,8 +24,8 @@ RETURNING id, created_at, updated_at, email, hashed_password, is_chirpy_red
 `
 
 type CreateUserParams struct {
-	Email          string
-	HashedPassword string
+	Email          string `json:"email"`
+	HashedPassword string `json:"hashed_password"`
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {
@@ -78,9 +78,9 @@ RETURNING id, created_at, updated_at, email, hashed_password, is_chirpy_red
 `
 
 type UpdateUserEmailAndPasswordParams struct {
-	ID             uuid.UUID
-	Email          string
-	HashedPassword string
+	ID             uuid.UUID `json:"id"`
+	Email          string    `json:"email"`
+	HashedPassword string    `json:"hashed_password"`
 }
 
 func (q *Queries) UpdateUserEmailAndPassword(ctx context.Context, arg UpdateUserEmailAndPasswordParams) (User, error) {
