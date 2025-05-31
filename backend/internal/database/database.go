@@ -76,6 +76,7 @@ func (s *Service) Health() map[string]string {
 	if err != nil {
 		stats["status"] = "down"
 		stats["error"] = fmt.Sprintf("db down: %v", err)
+		// TODO: return an error here so that the callee can decide how to handle it
 		log.Fatalf("db down: %v", err) // Log the error and terminate the program
 		return stats
 	}
