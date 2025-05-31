@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"backend/internal/auth"
@@ -22,7 +22,7 @@ type Chirp struct {
 	UserID    uuid.UUID `json:"user_id"`
 }
 
-func (cfg *apiConfig) handleChirp(w http.ResponseWriter, r *http.Request) {
+func (cfg *Api) HandleChirp(w http.ResponseWriter, r *http.Request) {
 	type parameters struct {
 		Body string `json:"body"`
 	}
@@ -34,7 +34,7 @@ func (cfg *apiConfig) handleChirp(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userId, err := auth.ValidateJWT(token, cfg.jwtSecret)
+	userId, err := auth.ValidateJWT(token, cfg.JwtSecret)
 	if err != nil {
 		utils.RespondWithError(w, http.StatusUnauthorized, "Invalid authentication token", err)
 		return
@@ -55,7 +55,7 @@ func (cfg *apiConfig) handleChirp(w http.ResponseWriter, r *http.Request) {
 	}
 
 	cleaned := removeProfanity(params.Body)
-	chirp, err := cfg.dbInstance.Queries.CreateChirp(r.Context(), sqlc.CreateChirpParams{
+	chirp, err := cfg.DbInstance.Queries.CreateChirp(r.Context(), sqlc.CreateChirpParams{
 		Body:   cleaned,
 		UserID: userId, // Use the userId from the JWT
 	})
@@ -89,7 +89,7 @@ func removeProfanity(input string) string {
 	return strings.Join(split, " ")
 }
 
-func (cfg *apiConfig) handleGetChirps(w http.ResponseWriter, r *http.Request) {
+func (cfg *Api) HandleGetChirps(w http.ResponseWriter, r *http.Request) {
 	authorId := r.URL.Query().Get("author_id")
 	// "asc" or "desc" -- empty = asc
 	sortParam := r.URL.Query().Get("sort")
@@ -103,9 +103,9 @@ func (cfg *apiConfig) handleGetChirps(w http.ResponseWriter, r *http.Request) {
 			utils.RespondWithError(w, http.StatusBadRequest, "Invalid author ID", err)
 		}
 
-		chirps, getChirpsErr = cfg.dbInstance.Queries.GetChirpsByUserId(r.Context(), authorId)
+		chirps, getChirpsErr = cfg.DbInstance.Queries.GetChirpsByUserId(r.Context(), authorId)
 	} else {
-		chirps, getChirpsErr = cfg.dbInstance.Queries.GetChirps(r.Context())
+		chirps, getChirpsErr = cfg.DbInstance.Queries.GetChirps(r.Context())
 	}
 
 	if getChirpsErr != nil {
@@ -140,13 +140,13 @@ func (cfg *apiConfig) handleGetChirps(w http.ResponseWriter, r *http.Request) {
 	utils.RespondWithJSON(w, http.StatusOK, chirpsResponse)
 }
 
-func (cfg *apiConfig) handleGetChirp(w http.ResponseWriter, r *http.Request) {
+func (cfg *Api) HandleGetChirp(w http.ResponseWriter, r *http.Request) {
 	chirpId := r.PathValue("id")
 	if chirpId == "" {
 		utils.RespondWithError(w, http.StatusBadRequest, "Missing chirp ID", nil)
 		return
 	}
-	chirp, err := cfg.dbInstance.Queries.GetChirpById(r.Context(), uuid.MustParse(chirpId))
+	chirp, err := cfg.DbInstance.Queries.GetChirpById(r.Context(), uuid.MustParse(chirpId))
 	if err != nil {
 		utils.RespondWithError(w, http.StatusNotFound, fmt.Sprintf("Could not find chirp with id: %s", chirpId), err)
 		return
@@ -160,7 +160,7 @@ func (cfg *apiConfig) handleGetChirp(w http.ResponseWriter, r *http.Request) {
 		Body:      chirp.Body,
 	})
 }
-func (cfg *apiConfig) handleDeleteChirp(w http.ResponseWriter, r *http.Request) {
+func (cfg *Api) HandleDeleteChirp(w http.ResponseWriter, r *http.Request) {
 	chirpId := r.PathValue("id")
 	if chirpId == "" {
 		utils.RespondWithError(w, http.StatusBadRequest, "Missing chirp ID", nil)
@@ -172,13 +172,13 @@ func (cfg *apiConfig) handleDeleteChirp(w http.ResponseWriter, r *http.Request) 
 		utils.RespondWithError(w, http.StatusUnauthorized, "Invalid authentication token", err)
 		return
 	}
-	userId, err := auth.ValidateJWT(token, cfg.jwtSecret)
+	userId, err := auth.ValidateJWT(token, cfg.JwtSecret)
 	if err != nil {
 		utils.RespondWithError(w, http.StatusUnauthorized, "Invalid authentication token", err)
 		return
 	}
 
-	chirp, err := cfg.dbInstance.Queries.GetChirpById(r.Context(), uuid.MustParse(chirpId))
+	chirp, err := cfg.DbInstance.Queries.GetChirpById(r.Context(), uuid.MustParse(chirpId))
 	if err != nil {
 		utils.RespondWithError(w, http.StatusNotFound, fmt.Sprintf("Could not find chirp with id: %s", chirpId), err)
 		return
@@ -188,7 +188,7 @@ func (cfg *apiConfig) handleDeleteChirp(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	err = cfg.dbInstance.Queries.DeleteChirp(r.Context(), chirp.ID)
+	err = cfg.DbInstance.Queries.DeleteChirp(r.Context(), chirp.ID)
 	if err != nil {
 		utils.RespondWithError(w, http.StatusInternalServerError, "Something went wrong when deleting chirp", err)
 		return

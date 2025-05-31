@@ -1,2 +1,2 @@
 cd backend && go test ./...
-pnpm turbo typecheck lint test
+pnpm turbo typecheck lint test --output-logs=new-only

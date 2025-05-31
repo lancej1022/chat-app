@@ -1,6 +1,7 @@
 package main
 
 import (
+	"backend/internal/api"
 	"backend/internal/database"
 	"backend/sql/migrations"
 	"database/sql"
@@ -18,13 +19,13 @@ import (
 	"github.com/pressly/goose/v3"
 )
 
-type apiConfig struct {
-	dbInstance     *database.Service
-	platform       string
-	jwtSecret      string
-	polkaKey       string
-	fileserverHits atomic.Int32
-}
+// type apiConfig struct {
+// 	dbInstance     *database.Service
+// 	platform       string
+// 	jwtSecret      string
+// 	polkaKey       string
+// 	fileserverHits atomic.Int32
+// }
 
 func main() {
 	godotenv.Load()
@@ -43,12 +44,12 @@ func main() {
 	dbInstance := database.NewDbInstance()
 	filepathRoot := "."
 	port := "8080"
-	apiCfg := &apiConfig{
-		fileserverHits: atomic.Int32{},
-		dbInstance:     dbInstance,
-		platform:       os.Getenv("PLATFORM"),
-		jwtSecret:      os.Getenv("JWT_SECRET"),
-		polkaKey:       os.Getenv("POLKA_KEY"),
+	api := &api.Api{
+		FileserverHits: atomic.Int32{},
+		DbInstance:     dbInstance,
+		Platform:       os.Getenv("PLATFORM"),
+		JwtSecret:      os.Getenv("JWT_SECRET"),
+		PolkaKey:       os.Getenv("POLKA_KEY"),
 	}
 	// ServeMux is an HTTP request multiplexer.
 	// It matches the URL of each incoming request against a list of registered patterns
@@ -83,17 +84,17 @@ func main() {
 	// })
 
 	router.Get("/api/healthz", handlerReadiness)
-	router.Post("/api/polka/webhooks", apiCfg.handleUpgradeToChirpyRed)
-	router.Post("/api/users", apiCfg.handleAddUser)
-	router.Put("/api/users", apiCfg.handleUpdateUser)
-	router.Post("/api/login", apiCfg.handleLogin)
-	router.Post("/api/refresh", apiCfg.handleLoginRefresh)
-	router.Post("/api/revoke", apiCfg.handleRevokeRefreshToken)
-	router.Post("/api/chirps", apiCfg.handleChirp)
-	router.Delete("/api/chirps/{id}", apiCfg.handleDeleteChirp)
-	router.Get("/api/chirps", apiCfg.handleGetChirps)
-	router.Get("/api/chirps/{id}", apiCfg.handleGetChirp)
-	router.Post("/admin/reset", apiCfg.handlerReset)
+	router.Post("/api/polka/webhooks", api.HandleUpgradeToChirpyRed)
+	router.Post("/api/users", api.HandleAddUser)
+	router.Put("/api/users", api.HandleUpdateUser)
+	router.Post("/api/login", api.HandleLogin)
+	router.Post("/api/refresh", api.HandleLoginRefresh)
+	router.Post("/api/revoke", api.HandleRevokeRefreshToken)
+	router.Post("/api/chirps", api.HandleChirp)
+	router.Delete("/api/chirps/{id}", api.HandleDeleteChirp)
+	router.Get("/api/chirps", api.HandleGetChirps)
+	router.Get("/api/chirps/{id}", api.HandleGetChirp)
+	router.Post("/admin/reset", api.HandlerReset)
 	// return router
 
 	srv := &http.Server{

@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"backend/internal/auth"
@@ -11,7 +11,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (cfg *apiConfig) handleLogin(w http.ResponseWriter, r *http.Request) {
+func (cfg *Api) HandleLogin(w http.ResponseWriter, r *http.Request) {
 	type parameters struct {
 		Email    string `json:"email"`
 		Password string `json:"password"`
@@ -34,7 +34,7 @@ func (cfg *apiConfig) handleLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := cfg.dbInstance.Queries.GetUserByEmail(r.Context(), params.Email)
+	user, err := cfg.DbInstance.Queries.GetUserByEmail(r.Context(), params.Email)
 	if err != nil {
 		utils.RespondWithError(w, http.StatusUnauthorized, "Incorrect email or password.", err)
 		return
@@ -45,7 +45,7 @@ func (cfg *apiConfig) handleLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	accessToken, err := auth.MakeJWT(user.ID, cfg.jwtSecret, time.Hour)
+	accessToken, err := auth.MakeJWT(user.ID, cfg.JwtSecret, time.Hour)
 	if err != nil {
 		utils.RespondWithError(w, http.StatusInternalServerError, "Couldn't create JWT", err)
 		return
@@ -57,7 +57,7 @@ func (cfg *apiConfig) handleLogin(w http.ResponseWriter, r *http.Request) {
 	}
 
 	now := time.Now()
-	_, err = cfg.dbInstance.Queries.CreateRefreshToken(r.Context(), sqlc.CreateRefreshTokenParams{
+	_, err = cfg.DbInstance.Queries.CreateRefreshToken(r.Context(), sqlc.CreateRefreshTokenParams{
 		Token:     refreshToken,
 		UserID:    user.ID,
 		ExpiresAt: now.Add(time.Hour * 24 * 60), // 60 days

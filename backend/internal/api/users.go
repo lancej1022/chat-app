@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"backend/internal/auth"
@@ -19,7 +19,7 @@ type userResponse struct {
 	Id          uuid.UUID `json:"id"`
 }
 
-func (cfg *apiConfig) handleAddUser(w http.ResponseWriter, r *http.Request) {
+func (cfg *Api) HandleAddUser(w http.ResponseWriter, r *http.Request) {
 	// TODO: should this be shared with `auth.go`?
 	type parameters struct {
 		Email    string `json:"email"`
@@ -40,7 +40,7 @@ func (cfg *apiConfig) handleAddUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := cfg.dbInstance.Queries.CreateUser(r.Context(), sqlc.CreateUserParams{
+	user, err := cfg.DbInstance.Queries.CreateUser(r.Context(), sqlc.CreateUserParams{
 		Email:          params.Email,
 		HashedPassword: hashedPass,
 	})
@@ -58,7 +58,7 @@ func (cfg *apiConfig) handleAddUser(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func (cfg *apiConfig) handleUpdateUser(w http.ResponseWriter, r *http.Request) {
+func (cfg *Api) HandleUpdateUser(w http.ResponseWriter, r *http.Request) {
 	type parameters struct {
 		Email    string `json:"email"`
 		Password string `json:"password"`
@@ -70,7 +70,7 @@ func (cfg *apiConfig) handleUpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userId, err := auth.ValidateJWT(accessToken, cfg.jwtSecret)
+	userId, err := auth.ValidateJWT(accessToken, cfg.JwtSecret)
 	if err != nil {
 		utils.RespondWithError(w, http.StatusUnauthorized, "Invalid authentication token", err)
 		return
@@ -89,7 +89,7 @@ func (cfg *apiConfig) handleUpdateUser(w http.ResponseWriter, r *http.Request) {
 		utils.RespondWithError(w, http.StatusInternalServerError, "Unable to generate password", err)
 		return
 	}
-	user, err := cfg.dbInstance.Queries.UpdateUserEmailAndPassword(r.Context(), sqlc.UpdateUserEmailAndPasswordParams{
+	user, err := cfg.DbInstance.Queries.UpdateUserEmailAndPassword(r.Context(), sqlc.UpdateUserEmailAndPasswordParams{
 		Email:          params.Email,
 		HashedPassword: hashedPass,
 		ID:             userId,
@@ -107,7 +107,7 @@ func (cfg *apiConfig) handleUpdateUser(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func (cfg *apiConfig) handleUpgradeToChirpyRed(w http.ResponseWriter, r *http.Request) {
+func (cfg *Api) HandleUpgradeToChirpyRed(w http.ResponseWriter, r *http.Request) {
 	type parameters struct {
 		Event string `json:"event"`
 		Data  struct {
@@ -120,7 +120,7 @@ func (cfg *apiConfig) handleUpgradeToChirpyRed(w http.ResponseWriter, r *http.Re
 		utils.RespondWithError(w, http.StatusUnauthorized, "Invalid API key", err)
 		return
 	}
-	if apiKey != cfg.polkaKey {
+	if apiKey != cfg.PolkaKey {
 		utils.RespondWithError(w, http.StatusUnauthorized, "Invalid API key", nil)
 		return
 	}
@@ -144,7 +144,7 @@ func (cfg *apiConfig) handleUpgradeToChirpyRed(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	err = cfg.dbInstance.Queries.UpgradeToChirpyRed(r.Context(), uid)
+	err = cfg.DbInstance.Queries.UpgradeToChirpyRed(r.Context(), uid)
 	if err != nil {
 		utils.RespondWithError(w, http.StatusInternalServerError, "Could not upgrade user", err)
 		return
