@@ -2,16 +2,18 @@ package database
 
 import (
 	"backend/internal/database/sqlc"
+	"backend/sql/migrations"
 	"context"
 	"database/sql"
 	"fmt"
+	"io/fs"
 	"log"
 	"os"
 	"strconv"
 	"time"
 
-	// _ "github.com/jackc/pgx/v5/stdlib"
 	_ "github.com/joho/godotenv/autoload"
+	"github.com/pressly/goose/v3"
 )
 
 // Service represents a service that interacts with a database.
@@ -30,35 +32,35 @@ type Service struct {
 	Queries *sqlc.Queries
 }
 
-// TODO: retrieve these from the `main` file on boot rather than having a package that reads environment variables
+// TODO: retrieve `database` env var from the `main` file on boot rather than having a package that reads environment variables
 var (
-	database = os.Getenv("BLUEPRINT_DB_DATABASE")
-	// password   = os.Getenv("BLUEPRINT_DB_PASSWORD")
-	// username   = os.Getenv("BLUEPRINT_DB_USERNAME")
-	// port       = os.Getenv("BLUEPRINT_DB_PORT")
-	// host       = os.Getenv("BLUEPRINT_DB_HOST")
-	// schema     = os.Getenv("BLUEPRINT_DB_SCHEMA")
-	dbURL      = os.Getenv("DB_URL")
+	database   = os.Getenv("BLUEPRINT_DB_DATABASE")
 	dbInstance *Service
 )
 
-func NewDbInstance() *Service {
+func NewDbInstance(dbURL string) (*Service, error) {
+	// TODO: idk if this "reuse connection" logic from go-blueprint is even needed? Seems like it would only happen if we call `NewDbInstance` multiple times somehow
 	// Reuse Connection
 	if dbInstance != nil {
-		return dbInstance
+		return dbInstance, nil
 	}
-	// connStr := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable&search_path=%s", username, password, host, port, database, schema)
-	// db, err := sql.Open("postgres", connStr)
+
 	db, err := sql.Open("postgres", dbURL)
 	if err != nil {
-		log.Fatal(err)
+		return nil, fmt.Errorf("error opening database: %w", err)
 	}
+	// TODO: might not want this auto-migrate logic in the long-term, but its convenient for now
+	err = MigrateFs(db, migrations.FS, ".")
+	if err != nil {
+		return nil, fmt.Errorf("error migrating database: %w", err)
+	}
+
 	queries := sqlc.New(db)
 	dbInstance = &Service{
 		Db:      db,
 		Queries: queries,
 	}
-	return dbInstance
+	return dbInstance, nil
 }
 
 // Health checks the health of the database connection by pinging the database.
@@ -119,4 +121,26 @@ func (s *Service) Health() map[string]string {
 func (s *Service) Close() error {
 	log.Printf("Disconnected from database: %s", database)
 	return s.Db.Close()
+}
+
+func MigrateFs(db *sql.DB, migrationFS fs.FS, migrationsDir string) error {
+	goose.SetBaseFS(migrationFS)
+	defer func() {
+		goose.SetBaseFS(nil)
+	}()
+	return Migrate(db, migrationsDir)
+}
+
+// Tell goose which database to use
+func Migrate(db *sql.DB, migrationsDir string) error {
+	err := goose.SetDialect("postgres")
+	if err != nil {
+		return fmt.Errorf("migrate:set-dialect %w", err)
+	}
+
+	err = goose.Up(db, migrationsDir)
+	if err != nil {
+		return fmt.Errorf("goose up: %w", err)
+	}
+	return nil
 }
