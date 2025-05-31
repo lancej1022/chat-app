@@ -19,7 +19,7 @@ import (
 )
 
 type apiConfig struct {
-	db             *database.Queries
+	dbInstance     *database.Service
 	platform       string
 	jwtSecret      string
 	polkaKey       string
@@ -40,12 +40,12 @@ func main() {
 		panic(err)
 	}
 
-	dbQueries := database.New(db)
+	dbInstance := database.NewDbInstance()
 	filepathRoot := "."
 	port := "8080"
 	apiCfg := &apiConfig{
 		fileserverHits: atomic.Int32{},
-		db:             dbQueries,
+		dbInstance:     dbInstance,
 		platform:       os.Getenv("PLATFORM"),
 		jwtSecret:      os.Getenv("JWT_SECRET"),
 		polkaKey:       os.Getenv("POLKA_KEY"),

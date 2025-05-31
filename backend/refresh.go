@@ -17,7 +17,7 @@ func (cfg *apiConfig) handleLoginRefresh(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	user, err := cfg.db.GetUserFromRefreshToken(r.Context(), refreshToken)
+	user, err := cfg.dbInstance.Queries.GetUserFromRefreshToken(r.Context(), refreshToken)
 	if err != nil {
 		respondWithError(w, http.StatusUnauthorized, "Couldn't get user for refresh token", err)
 		return
@@ -40,7 +40,7 @@ func (cfg *apiConfig) handleRevokeRefreshToken(w http.ResponseWriter, r *http.Re
 		respondWithError(w, http.StatusUnauthorized, "Invalid refresh token", err)
 		return
 	}
-	err = cfg.db.RevokeRefreshToken(r.Context(), refreshToken)
+	err = cfg.dbInstance.Queries.RevokeRefreshToken(r.Context(), refreshToken)
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, "Couldn't revoke refresh token", err)
 		return

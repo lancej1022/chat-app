@@ -2,7 +2,7 @@ package main
 
 import (
 	"backend/internal/auth"
-	"backend/internal/database"
+	"backend/internal/database/sqlc"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -54,7 +54,7 @@ func (cfg *apiConfig) handleChirp(w http.ResponseWriter, r *http.Request) {
 	}
 
 	cleaned := removeProfanity(params.Body)
-	chirp, err := cfg.db.CreateChirp(r.Context(), database.CreateChirpParams{
+	chirp, err := cfg.dbInstance.Queries.CreateChirp(r.Context(), sqlc.CreateChirpParams{
 		Body:   cleaned,
 		UserID: userId, // Use the userId from the JWT
 	})
@@ -94,7 +94,7 @@ func (cfg *apiConfig) handleGetChirps(w http.ResponseWriter, r *http.Request) {
 	sortParam := r.URL.Query().Get("sort")
 
 	var getChirpsErr error
-	var chirps []database.Chirp
+	var chirps []sqlc.Chirp
 
 	if authorId != "" {
 		authorId, err := uuid.Parse(authorId)
@@ -102,9 +102,9 @@ func (cfg *apiConfig) handleGetChirps(w http.ResponseWriter, r *http.Request) {
 			respondWithError(w, http.StatusBadRequest, "Invalid author ID", err)
 		}
 
-		chirps, getChirpsErr = cfg.db.GetChirpsByUserId(r.Context(), authorId)
+		chirps, getChirpsErr = cfg.dbInstance.Queries.GetChirpsByUserId(r.Context(), authorId)
 	} else {
-		chirps, getChirpsErr = cfg.db.GetChirps(r.Context())
+		chirps, getChirpsErr = cfg.dbInstance.Queries.GetChirps(r.Context())
 	}
 
 	if getChirpsErr != nil {
@@ -145,7 +145,7 @@ func (cfg *apiConfig) handleGetChirp(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusBadRequest, "Missing chirp ID", nil)
 		return
 	}
-	chirp, err := cfg.db.GetChirpById(r.Context(), uuid.MustParse(chirpId))
+	chirp, err := cfg.dbInstance.Queries.GetChirpById(r.Context(), uuid.MustParse(chirpId))
 	if err != nil {
 		respondWithError(w, http.StatusNotFound, fmt.Sprintf("Could not find chirp with id: %s", chirpId), err)
 		return
@@ -177,7 +177,7 @@ func (cfg *apiConfig) handleDeleteChirp(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	chirp, err := cfg.db.GetChirpById(r.Context(), uuid.MustParse(chirpId))
+	chirp, err := cfg.dbInstance.Queries.GetChirpById(r.Context(), uuid.MustParse(chirpId))
 	if err != nil {
 		respondWithError(w, http.StatusNotFound, fmt.Sprintf("Could not find chirp with id: %s", chirpId), err)
 		return
@@ -187,7 +187,7 @@ func (cfg *apiConfig) handleDeleteChirp(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	err = cfg.db.DeleteChirp(r.Context(), chirp.ID)
+	err = cfg.dbInstance.Queries.DeleteChirp(r.Context(), chirp.ID)
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, "Something went wrong when deleting chirp", err)
 		return

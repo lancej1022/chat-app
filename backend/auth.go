@@ -2,7 +2,7 @@ package main
 
 import (
 	"backend/internal/auth"
-	"backend/internal/database"
+	"backend/internal/database/sqlc"
 	"encoding/json"
 	"net/http"
 	"time"
@@ -33,7 +33,7 @@ func (cfg *apiConfig) handleLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := cfg.db.GetUserByEmail(r.Context(), params.Email)
+	user, err := cfg.dbInstance.Queries.GetUserByEmail(r.Context(), params.Email)
 	if err != nil {
 		respondWithError(w, http.StatusUnauthorized, "Incorrect email or password.", err)
 		return
@@ -56,7 +56,7 @@ func (cfg *apiConfig) handleLogin(w http.ResponseWriter, r *http.Request) {
 	}
 
 	now := time.Now()
-	_, err = cfg.db.CreateRefreshToken(r.Context(), database.CreateRefreshTokenParams{
+	_, err = cfg.dbInstance.Queries.CreateRefreshToken(r.Context(), sqlc.CreateRefreshTokenParams{
 		Token:     refreshToken,
 		UserID:    user.ID,
 		ExpiresAt: now.Add(time.Hour * 24 * 60), // 60 days

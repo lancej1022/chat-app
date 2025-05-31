@@ -2,7 +2,7 @@ package main
 
 import (
 	"backend/internal/auth"
-	"backend/internal/database"
+	"backend/internal/database/sqlc"
 	"encoding/json"
 	"net/http"
 	"time"
@@ -39,7 +39,7 @@ func (cfg *apiConfig) handleAddUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := cfg.db.CreateUser(r.Context(), database.CreateUserParams{
+	user, err := cfg.dbInstance.Queries.CreateUser(r.Context(), sqlc.CreateUserParams{
 		Email:          params.Email,
 		HashedPassword: hashedPass,
 	})
@@ -88,7 +88,7 @@ func (cfg *apiConfig) handleUpdateUser(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusInternalServerError, "Unable to generate password", err)
 		return
 	}
-	user, err := cfg.db.UpdateUserEmailAndPassword(r.Context(), database.UpdateUserEmailAndPasswordParams{
+	user, err := cfg.dbInstance.Queries.UpdateUserEmailAndPassword(r.Context(), sqlc.UpdateUserEmailAndPasswordParams{
 		Email:          params.Email,
 		HashedPassword: hashedPass,
 		ID:             userId,
@@ -143,7 +143,7 @@ func (cfg *apiConfig) handleUpgradeToChirpyRed(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	err = cfg.db.UpgradeToChirpyRed(r.Context(), uid)
+	err = cfg.dbInstance.Queries.UpgradeToChirpyRed(r.Context(), uid)
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, "Could not upgrade user", err)
 		return
