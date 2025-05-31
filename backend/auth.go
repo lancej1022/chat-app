@@ -3,6 +3,7 @@ package main
 import (
 	"backend/internal/auth"
 	"backend/internal/database/sqlc"
+	"backend/utils"
 	"encoding/json"
 	"net/http"
 	"time"
@@ -29,29 +30,29 @@ func (cfg *apiConfig) handleLogin(w http.ResponseWriter, r *http.Request) {
 	params := parameters{}
 	err := decoder.Decode(&params)
 	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Something went wrong decoding the response", err)
+		utils.RespondWithError(w, http.StatusBadRequest, "Something went wrong decoding the response", err)
 		return
 	}
 
 	user, err := cfg.dbInstance.Queries.GetUserByEmail(r.Context(), params.Email)
 	if err != nil {
-		respondWithError(w, http.StatusUnauthorized, "Incorrect email or password.", err)
+		utils.RespondWithError(w, http.StatusUnauthorized, "Incorrect email or password.", err)
 		return
 	}
 
 	if ok := auth.CheckPasswordHash(params.Password, user.HashedPassword); ok != nil {
-		respondWithError(w, http.StatusUnauthorized, "Incorrect email or password.", err)
+		utils.RespondWithError(w, http.StatusUnauthorized, "Incorrect email or password.", err)
 		return
 	}
 
 	accessToken, err := auth.MakeJWT(user.ID, cfg.jwtSecret, time.Hour)
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Couldn't create JWT", err)
+		utils.RespondWithError(w, http.StatusInternalServerError, "Couldn't create JWT", err)
 		return
 	}
 	refreshToken, err := auth.MakeRefreshToken()
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Couldn't create refresh token", err)
+		utils.RespondWithError(w, http.StatusInternalServerError, "Couldn't create refresh token", err)
 		return
 	}
 
@@ -64,11 +65,11 @@ func (cfg *apiConfig) handleLogin(w http.ResponseWriter, r *http.Request) {
 		UpdatedAt: now,
 	})
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Couldn't save refresh token", err)
+		utils.RespondWithError(w, http.StatusInternalServerError, "Couldn't save refresh token", err)
 		return
 	}
 
-	respondWithJSON(w, http.StatusOK, returnVals{
+	utils.RespondWithJSON(w, http.StatusOK, returnVals{
 		Id:           user.ID,
 		IsChirpyRed:  user.IsChirpyRed,
 		Email:        user.Email,

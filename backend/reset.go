@@ -1,17 +1,20 @@
 package main
 
-import "net/http"
+import (
+	"backend/utils"
+	"net/http"
+)
 
 func (cfg *apiConfig) handlerReset(w http.ResponseWriter, r *http.Request) {
 	if cfg.platform != "dev" {
-		respondWithError(w, http.StatusForbidden, "Reset is only allowed in dev mode", nil)
+		utils.RespondWithError(w, http.StatusForbidden, "Reset is only allowed in dev mode", nil)
 		return
 	}
 
 	cfg.fileserverHits.Store(0)
 	err := cfg.dbInstance.Queries.ResetUsers(r.Context())
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Something went wrong when trying to delete the users", err)
+		utils.RespondWithError(w, http.StatusInternalServerError, "Something went wrong when trying to delete the users", err)
 		return
 	}
 	w.WriteHeader(http.StatusOK)

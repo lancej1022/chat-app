@@ -3,6 +3,7 @@ package main
 import (
 	"backend/internal/auth"
 	"backend/internal/database/sqlc"
+	"backend/utils"
 	"encoding/json"
 	"net/http"
 	"time"
@@ -29,13 +30,13 @@ func (cfg *apiConfig) handleAddUser(w http.ResponseWriter, r *http.Request) {
 	params := parameters{}
 	err := decoder.Decode(&params)
 	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Something went wrong decoding the response", err)
+		utils.RespondWithError(w, http.StatusBadRequest, "Something went wrong decoding the response", err)
 		return
 	}
 
 	hashedPass, err := auth.HashPassword(params.Password)
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Unable to generate password", err)
+		utils.RespondWithError(w, http.StatusInternalServerError, "Unable to generate password", err)
 		return
 	}
 
@@ -44,11 +45,11 @@ func (cfg *apiConfig) handleAddUser(w http.ResponseWriter, r *http.Request) {
 		HashedPassword: hashedPass,
 	})
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Something went wrong when creating the user", err)
+		utils.RespondWithError(w, http.StatusInternalServerError, "Something went wrong when creating the user", err)
 		return
 	}
 
-	respondWithJSON(w, http.StatusCreated, userResponse{
+	utils.RespondWithJSON(w, http.StatusCreated, userResponse{
 		Id:          user.ID,
 		Email:       user.Email,
 		IsChirpyRed: user.IsChirpyRed,
@@ -65,13 +66,13 @@ func (cfg *apiConfig) handleUpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	accessToken, err := auth.GetBearerToken(r.Header)
 	if err != nil {
-		respondWithError(w, http.StatusUnauthorized, "Invalid authentication token", err)
+		utils.RespondWithError(w, http.StatusUnauthorized, "Invalid authentication token", err)
 		return
 	}
 
 	userId, err := auth.ValidateJWT(accessToken, cfg.jwtSecret)
 	if err != nil {
-		respondWithError(w, http.StatusUnauthorized, "Invalid authentication token", err)
+		utils.RespondWithError(w, http.StatusUnauthorized, "Invalid authentication token", err)
 		return
 	}
 
@@ -79,13 +80,13 @@ func (cfg *apiConfig) handleUpdateUser(w http.ResponseWriter, r *http.Request) {
 	params := parameters{}
 	err = decoder.Decode(&params)
 	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Something went wrong when decoding request", err)
+		utils.RespondWithError(w, http.StatusBadRequest, "Something went wrong when decoding request", err)
 		return
 	}
 
 	hashedPass, err := auth.HashPassword(params.Password)
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Unable to generate password", err)
+		utils.RespondWithError(w, http.StatusInternalServerError, "Unable to generate password", err)
 		return
 	}
 	user, err := cfg.dbInstance.Queries.UpdateUserEmailAndPassword(r.Context(), sqlc.UpdateUserEmailAndPasswordParams{
@@ -94,10 +95,10 @@ func (cfg *apiConfig) handleUpdateUser(w http.ResponseWriter, r *http.Request) {
 		ID:             userId,
 	})
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Something went wrong when updating the user", err)
+		utils.RespondWithError(w, http.StatusInternalServerError, "Something went wrong when updating the user", err)
 		return
 	}
-	respondWithJSON(w, http.StatusOK, userResponse{
+	utils.RespondWithJSON(w, http.StatusOK, userResponse{
 		Id:          user.ID,
 		Email:       user.Email,
 		IsChirpyRed: user.IsChirpyRed,
@@ -116,11 +117,11 @@ func (cfg *apiConfig) handleUpgradeToChirpyRed(w http.ResponseWriter, r *http.Re
 
 	apiKey, err := auth.GetAPIKey(r.Header)
 	if err != nil {
-		respondWithError(w, http.StatusUnauthorized, "Invalid API key", err)
+		utils.RespondWithError(w, http.StatusUnauthorized, "Invalid API key", err)
 		return
 	}
 	if apiKey != cfg.polkaKey {
-		respondWithError(w, http.StatusUnauthorized, "Invalid API key", nil)
+		utils.RespondWithError(w, http.StatusUnauthorized, "Invalid API key", nil)
 		return
 	}
 
@@ -128,7 +129,7 @@ func (cfg *apiConfig) handleUpgradeToChirpyRed(w http.ResponseWriter, r *http.Re
 	params := parameters{}
 	err = decoder.Decode(&params)
 	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Something went wrong decoding the response", err)
+		utils.RespondWithError(w, http.StatusBadRequest, "Something went wrong decoding the response", err)
 		return
 	}
 
@@ -139,13 +140,13 @@ func (cfg *apiConfig) handleUpgradeToChirpyRed(w http.ResponseWriter, r *http.Re
 
 	uid, err := uuid.Parse(params.Data.UserId)
 	if err != nil {
-		respondWithError(w, http.StatusNotFound, "Could not locate user to upgrade", err)
+		utils.RespondWithError(w, http.StatusNotFound, "Could not locate user to upgrade", err)
 		return
 	}
 
 	err = cfg.dbInstance.Queries.UpgradeToChirpyRed(r.Context(), uid)
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Could not upgrade user", err)
+		utils.RespondWithError(w, http.StatusInternalServerError, "Could not upgrade user", err)
 		return
 	}
 
