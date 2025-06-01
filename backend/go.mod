@@ -11,6 +11,8 @@ require (
 	golang.org/x/crypto v0.38.0
 )
 
+require github.com/rs/cors v1.11.1 // indirect
+
 require (
 	github.com/go-chi/chi/v5 v5.2.1
 	github.com/mfridman/interpolate v0.0.2 // indirect

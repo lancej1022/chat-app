@@ -16,6 +16,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
+	"github.com/rs/cors"
 )
 
 func gracefulShutdown(apiServer *http.Server, done chan bool) {
@@ -67,6 +68,14 @@ func main() {
 		PolkaKey:       os.Getenv("POLKA_KEY"),
 	}
 
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:3000"},
+		AllowCredentials: true,
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		// TODO: disable this in production
+		Debug: true,
+	})
 	router := chi.NewRouter()
 	// router.Group(func(r chi.Router) {
 	// 	r.Use(a.Middleware.Authenticate)
@@ -75,6 +84,7 @@ func main() {
 	// 	r.Put("/workouts/{id}", a.Middleware.RequireUser(a.WorkoutHandler.UpdateWorkoutById))
 	// 	r.Delete("/workouts/{id}", a.Middleware.RequireUser(a.WorkoutHandler.DeleteWorkout))
 	// })
+	router.Use(c.Handler)
 
 	router.Get("/api/healthz", handlerReadiness)
 	router.Post("/api/polka/webhooks", apiInstance.HandleUpgradeToChirpyRed)
