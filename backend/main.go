@@ -90,6 +90,7 @@ func main() {
 	router.Post("/api/polka/webhooks", apiInstance.HandleUpgradeToChirpyRed)
 	router.Post("/api/users", apiInstance.HandleAddUser)
 	router.Put("/api/users", apiInstance.HandleUpdateUser)
+	router.Post("/api/signup", apiInstance.HandleSignup)
 	router.Post("/api/login", apiInstance.HandleLogin)
 	router.Post("/api/refresh", apiInstance.HandleLoginRefresh)
 	router.Post("/api/revoke", apiInstance.HandleRevokeRefreshToken)
